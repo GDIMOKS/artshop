@@ -49,10 +49,7 @@ input:focus{
     background: #5b331b;;
 }
 
-.errors_block_good {
-    color: green;
-    font-weight: bold;
-}
+
 
 
 a {
@@ -111,6 +108,11 @@ ul {
 }
 
 .error_block {
-    font-size: 18px;
+    font-size: 20px;
     color: red;
+}
+
+.error_block_good {
+    font-size: 20px;
+    color: green;
 }
