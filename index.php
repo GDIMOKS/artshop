@@ -1,5 +1,6 @@
 <?php
-    require_once "assets/includes/config.php";
+session_start();
+require_once "assets/includes/config.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,7 +17,8 @@
     <?php
         require_once "assets/includes/header.php";
     ?>
-
+    <div class="workspace">
+    </div>
     </body>
 </html>
 

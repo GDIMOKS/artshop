@@ -3,16 +3,12 @@
 class Form
 {
     private $inputs = [];
+    private $form;
 
-//    public  function __construct() {
-//
-//    }
-//    public function __construct(array $inputs)
-//    {
-//        foreach ($inputs as $input) {
-//            $this->inputs[] = new Input($input['label'], $input['type'], $input['name'], $input['placeholder'], $input['parameter']);
-//        }
-//    }
+    public  function __construct($form) {
+        $this->form = $form;
+    }
+
 
     public function print(): void
     {
@@ -34,6 +30,12 @@ class Form
         // TODO: Implement __destruct() method.
     }
 
+    public function __get($property)
+    {
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }
+    }
 }
 
 class Input

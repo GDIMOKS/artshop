@@ -12,12 +12,11 @@
                 <li>
                     <a href="/assets/pages/cart.php" class="header_button cart-button">
                         <span>Корзина</span>
-                        <span id="cart-num"><?= $_SESSION['cart.count'] ?? 0 ?></span>
+                        <span id="cart-num"><?=$_SESSION['cart.count'] ?? 0 ?></span>
                     </a>
 
-
                     <?php
-                        if (!empty($_SESSION['auth']) && $_SESSION['auth'] == true) {
+                        if (!empty($_SESSION['auth'])) {
                             $href = '/assets/pages/cabinet.php';
                         } else {
                             $href = '/assets/pages/signin.php';

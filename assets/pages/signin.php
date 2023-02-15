@@ -1,9 +1,13 @@
 <?php
+session_start();
 require_once "../includes/config.php";
-require_once "../includes/header.php";
-require_once "../includes/auth_form.php";
-?>
+require_once "../includes/classes/form.php";
 
+if (!empty($_SESSION['auth']))
+{
+    header('Location: /assets/pages/cabinet.php');
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,6 +18,7 @@ require_once "../includes/auth_form.php";
         <link rel="stylesheet" href="/assets/styles/main.css">
 
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script type="text/javascript" src="/assets/js/jquery-3.6.1.min.js"></script>
 
     </head>
     <body>
@@ -25,7 +30,7 @@ require_once "../includes/auth_form.php";
     <div class="workspace">
         <form class="auth_reg" name="auth_form">
             <?php
-                $form = new Form();
+                $form = new Form('auth_form');
                 $form->setInput('Электронная почта', 'email', 'email', 'Введите свой email', 'autofocus');
                 $form->setInput('Пароль', 'password', 'password', 'Введите пароль');
 
@@ -41,13 +46,16 @@ require_once "../includes/auth_form.php";
                 У вас нет аккаунта? - <a href="signup.php" class="a_reg">зарегистрируйтесь</a>!
             </p>
 
+            <div class="error_block">
+
+            </div>
         </form>
 
 
 
 
     </div>
-<!--    <script type="module" src="../js/auth.js"></script>-->
+    <script type="module" src="../js/auth.js"></script>
 
     </body>
 </html>
