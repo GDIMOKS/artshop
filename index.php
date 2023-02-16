@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "assets/includes/config.php";
+require_once "assets/includes/authentication/cookie/cookie.php";
 ?>
 <!DOCTYPE html>
 <html>

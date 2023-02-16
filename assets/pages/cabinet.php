@@ -26,12 +26,16 @@ if (empty($_SESSION['auth']))
     ?>
 
     <div class="workspace">
-        <a class="button cabinet_button" href="../includes/logout.php">
+        <a class="button cabinet_button" href="../includes/authentication/logout.php">
             <div class="cabinet_button_text">Выйти из аккаунта</div>
         </a>
 
+        <div class="current_time">
+
+        </div>
+
     </div>
-    <script type="module" src="../js/auth.js"></script>
+    <script type="module" src="../js/cabinet_functions.js"></script>
 
     </body>
 </html>

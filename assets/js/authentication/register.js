@@ -1,4 +1,4 @@
-import {checkEmpty, formEvent, checkValue} from "./functions.js";
+import {checkEmpty, formEvent, checkValue} from "../functions.js";
 
 $(function () {
 
@@ -14,7 +14,7 @@ $(function () {
 
         let form = this;
         let main_error_block = $('[name=reg_form]').children('.error_block');
-        let urlRequest = '/assets/includes/register.php';
+        let urlRequest = '/assets/includes/authentication/register.php';
         let urlRedirect = '/';
 
         formEvent(form, main_error_block, urlRequest, urlRedirect)

@@ -2,6 +2,7 @@
 session_start();
 require_once "../includes/config.php";
 require_once "../includes/classes/form.php";
+require_once "../includes/authentication/cookie/cookie.php";
 
 if (!empty($_SESSION['auth']))
 {
@@ -59,7 +60,7 @@ if (!empty($_SESSION['auth']))
 
     </div>
 
-    <script type="module" src="../js/register.js"></script>
+    <script type="module" src="../js/authentication/register.js"></script>
 
     </body>
 </html>

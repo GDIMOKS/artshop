@@ -13,11 +13,23 @@ class Form
     public function print(): void
     {
         foreach ($this->inputs as $input) {
-            echo '<div class="for_input">
-                <label>'.$input->label.'</label>
-                <input type="'.$input->type.'" name="'.$input->name.'" placeholder="'.$input->placeholder.'"'.$input->parameter.'>
-                <p class="error_block"></p>
-            </div>';
+            switch ($input->type) {
+                case 'checkbox':
+                    echo '<div class="for_checkbox">
+                            <input class="custom_checkbox" type="'.$input->type.'" name="'.$input->name.'" placeholder="'.$input->placeholder.'">
+                            <label>'.$input->label.'</label>
+                        </div>';
+                    break;
+
+                default:
+                    echo '<div class="for_input">
+                        <label>'.$input->label.'</label>
+                        <input type="'.$input->type.'" name="'.$input->name.'" placeholder="'.$input->placeholder.'"'.$input->parameter.'>
+                        <p class="error_block"></p>
+                        </div>';
+                    break;
+            }
+
         }
     }
 
