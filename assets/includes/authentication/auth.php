@@ -16,6 +16,7 @@ $stmt->bind_param("s", $email);
 $stmt->execute();
 
 $userResult = $stmt->get_result()->fetch_assoc();
+//$userResult = $result->fetch_assoc();
 
 $dbPassword = $userResult['password'];
 

@@ -1,5 +1,4 @@
 <?php
-
 function generateSalt() {
     $salt = '';
     $saltLength = 60; //длина соли
@@ -28,6 +27,7 @@ function updateCookie() {
 
 function checkCookie() {
     global $connection;
+
     if (!empty($_COOKIE['login']) && !empty($_COOKIE['key'])) {
 
         $query = "SELECT * FROM users WHERE email=?";

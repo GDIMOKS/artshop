@@ -1,15 +1,14 @@
 <?php
+require_once "../includes/classes/form.php";
+
 session_start();
 require_once "../includes/config.php";
-require_once "../includes/classes/form.php";
 require_once "../includes/authentication/cookie/cookie.php";
 
 if (!empty($_SESSION['auth']))
 {
     header('Location: /assets/pages/cabinet.php');
 }
-
-print_r($_COOKIE);
 
 ?>
 <!DOCTYPE html>

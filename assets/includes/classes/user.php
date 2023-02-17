@@ -8,13 +8,13 @@ class User
     {
         $this->id = $userInfo['id'];
         $this->first_name = $userInfo['first_name'];
-        $this->last_name = $userInfo['last_name'];
-        $this->patronymic_name = $userInfo['patronymic_name'];
+        $this->last_name = $userInfo['last_name'] ?? "";
+        $this->patronymic_name = $userInfo['patronymic_name'] ?? "";
         $this->role_id = $userInfo['role_id'];
         $this->email = $userInfo['email'];
         $this->password = $userInfo['password'];
-        $this->phone = $userInfo['phone'];
-        $this->birthday = $userInfo['birthday'];
+        $this->phone = $userInfo['phone'] ?? "";
+        $this->birthday = $userInfo['birthday'] ?? "";
     }
 
     public function __get($property)
@@ -34,5 +34,29 @@ class User
     public function __destruct()
     {
         // TODO: Implement __destruct() method.
+    }
+
+    public function getRoleName() {
+        switch ($this->role_id) {
+            case 1:
+                return 'Владелец';
+            case 2:
+                return 'Студент';
+            case 3:
+                return 'Продавец';
+            case 4:
+                return 'Гость';
+        }
+    }
+
+    public function getFullName() {
+        $full_name = $this->first_name;
+
+        if (!empty($this->last_name))
+            $full_name .= $this->last_name;
+        if (!empty($this->patronymic_name))
+            $full_name .= $this->patronymic_name;
+
+        return $full_name;
     }
 }
