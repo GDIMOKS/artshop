@@ -7,9 +7,11 @@
     text-align: left;
 }
 
-.add_picture_form .checkselect-control{
+.add_picture_form .checkselect-control,
+.update_picture_form .checkselect-control{
     height: 59px;
 }
+.
 
 .checkselect-control {
     position: relative;

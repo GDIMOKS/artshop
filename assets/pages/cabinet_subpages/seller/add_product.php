@@ -67,7 +67,7 @@ require_once "../../../includes/header.php";
     </div>
 
     <?php
-    $form = new ProductForm('add_picture_form', 'add_picture_form');
+    $form = new ProductForm('add_picture_form', 'add_picture_form', 'Добавить товар');
     $form->print();
     ?>
 
@@ -78,7 +78,7 @@ require_once "../../../includes/header.php";
 </div>
 <script type="module" src="/assets/js/cabinet_functions.js"></script>
 <script type="module" src="/assets/js/cabinet/seller/add_product.js"></script>
-<script type="text/javascript" src="/assets/js/cabinet/seller/select_checkbox.js"></script>
+<script type="module" src="/assets/js/cabinet/seller/select_checkbox.js"></script>
 
 </body>
 </html>

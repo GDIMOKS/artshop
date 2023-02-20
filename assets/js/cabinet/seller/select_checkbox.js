@@ -1,15 +1,6 @@
+import {setChecked} from "../../functions.js";
+
 $(function () {
-
-    function setChecked(target) {
-
-        let checked = $(target).find("input[type='checkbox']:checked").length;
-        if (checked) {
-            $(target).find('select option:first').html('Выбрано: ' + checked);
-        } else {
-            $(target).find('select option:first').html('Выберите из списка');
-        }
-    }
-
 
 
     $.fn.checkselect = function() {
@@ -26,18 +17,18 @@ $(function () {
 
         this.parent().find('.checkselect-control').on('click', function(){
 
-            $popup = $(this).next();
+            let popup = $(this).next();
 
-            $('.checkselect-popup').not($popup).css('display', 'none');
+            $('.checkselect-popup').not(popup).css('display', 'none');
 
-            if ($popup.is(':hidden')) {
+            if (popup.is(':hidden')) {
 
-                $popup.css('display', 'block');
+                popup.css('display', 'block');
 
                 $(this).find('select').focus();
 
             } else {
-                $popup.css('display', 'none');
+                popup.css('display', 'none');
             }
 
         });

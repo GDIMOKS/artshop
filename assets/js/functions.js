@@ -222,6 +222,122 @@ export let formEvent = function (form, main_error_block, urlRequest, urlRedirect
 }
 
 
+export function setChecked(target) {
 
+    let checked = $(target).find("input[type='checkbox']:checked").length;
+    if (checked) {
+        $(target).find('select option:first').html('Выбрано: ' + checked);
+    } else {
+        $(target).find('select option:first').html('Выберите из списка');
+    }
+}
+
+export function fillUpdateProductForm(result) {
+    let form = $('form[name="update_picture_form"]');
+    form.find('input[name="name"]').val(result.picture.name ?? "");
+    form.find('img').attr('src', result.picture.imageHREF ?? "");
+    form.data('id', result.picture.picture_id ?? "");
+    // console.log(form.data('id'))
+    form.find('input[name="count"]').val(result.picture.count ?? "");
+    form.find('input[name="creation_date"]').val(result.picture.creation_date ?? "");
+    form.find('input[name="authors"]').val(result.picture.author ?? "");
+    form.find('input[name="selling_price"]').val(result.picture.selling_price ?? "");
+    form.find('input[name="purchase_price"]').val(result.picture.purchase_price ?? "");
+
+    let checkboxes = form.find("input[type='checkbox']");
+    for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = false;
+        if (result.picture.categories.includes($(checkboxes[i]).data('id'))) {
+            checkboxes[i].checked = true;
+            $(checkboxes[i]).closest('label').css('background-color', '#cb6800').css('color', '#ffffff');
+        }
+    }
+    setChecked($('.checkselect'));
+}
+
+export function pictureFormEvent(form, formData, image, main_error_block, urlRequest) {
+    checkFields(form);
+
+    let checkboxes = $('input[name="categories[]"]');
+    let error_blocks = $(form).find('.error_block');
+    let access = true;
+
+    for (let i = 0; i < error_blocks.length; i++) {
+        if (error_blocks[i].innerHTML != "") {
+            access = false;
+            break;
+        }
+    }
+
+    if (access) {
+        let categories = "";
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                categories += checkboxes[i].dataset.parents + " ";
+                categories += checkboxes[i].dataset.id + " ";
+            }
+
+        }
+        let allCategories = categories.trim().split(' ');
+        let categoriesSet = new Set(allCategories);
+        let uniqueCategories = Array.from(categoriesSet);
+
+        for (let i = 0; i < uniqueCategories.length; i++) {
+            formData.append('categories[]', uniqueCategories[i]);
+        }
+
+
+        let author_sel = form.querySelector('[name="authors"]');
+        formData.append('picture_id', $(form).data('id'));
+        formData.append('name', form.querySelector('input[name="name"]').value);
+        formData.append('count', form.querySelector('input[name="count"]').value);
+        formData.append('date', form.querySelector('input[name="creation_date"]').value);
+        formData.append('author_id', author_sel.options[author_sel.selectedIndex].dataset.id);
+        formData.append('selling_price', form.querySelector('input[name="selling_price"]').value);
+        formData.append('purchase_price', form.querySelector('input[name="purchase_price"]').value);
+
+
+
+        if (image == false) {
+            let img = $(form).find('img').attr('src');
+            img = img.split('/');
+            if (img.at(-1) != "") {
+                formData.append('image', img.at(-1));
+                formData.append('isDownload', 0);
+            } else {
+                formData.append('image', 'no_image.jpg');
+                formData.append('isDownload', 0)
+            }
+        } else {
+            formData.append('image', image);
+            formData.append('isDownload', 1);
+        }
+
+        $.ajax({
+            url: urlRequest,
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (result) {
+                if (result.code == 'ERROR') {
+                    main_error_block.text(result.message);
+                } else {
+                    $(main_error_block).addClass('error_block_good');
+                    main_error_block.text(result.message);
+                    $(form).find('img')[0].src = result.image;
+                    if (result.mode == 'update')
+                        setTimeout(redirect, 1000, '/assets/pages/cabinet_subpages/seller/update_product.php');
+                 }
+
+            },
+            error: function () {
+                console.log('Error!');
+            }
+        });
+    }
+}
 
 

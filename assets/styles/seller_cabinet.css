@@ -122,9 +122,27 @@
     box-shadow: 0 0 10px #00000010;
 
 }
-.update_picture_form,
+
+.picture_form {
+    margin: 50px;
+    padding: 0;
+    height: 50px;
+    width: 100%;
+    background-color: #fdfdfd;
+}
+
+.picture_form select {
+    height: inherit;
+    border: none;
+}
+.update_picture_form {
+    width: 100%;
+    background-color: #fdfdfd;
+    margin-bottom: 50px;
+}
 .add_picture_form{
     width: 100%;
     margin: 50px;
     background-color: #fdfdfd;
+    margin-bottom: 50px;
 }

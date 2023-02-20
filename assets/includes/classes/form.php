@@ -65,12 +65,14 @@ class Form
 
 class ProductForm extends Form {
     private $class;
+    private $button;
     private $categories = array();
     private $authors = array();
     private $pairInputs = array();
 
-    public  function __construct($name, $class) {
+    public  function __construct($name, $class, $submit_name) {
         $this->class = $class;
+        $this->button = $submit_name;
         parent::__construct($name);
     }
     public function fillForm($connection) {
@@ -186,7 +188,7 @@ class ProductForm extends Form {
 
         $this->printCategoriesAuthors($connection);
         echo '    </div>
-                <input class="button" type="submit" value="Добавить картину">
+                <input class="button" type="submit" value="'.$this->button.'">
                 <div class="error_block"></div>
               </form>';
     }
