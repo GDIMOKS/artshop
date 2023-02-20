@@ -1,8 +1,10 @@
-import {checkEmpty, formEvent} from "../functions.js";
+import {checkCaptcha, checkEmpty, formEvent} from "../functions.js";
 
 $(function () {
 
-    $('[name=auth_form]').find('input').on('input', function (e) {
+    $('[name=auth_form]').find('input')
+        .not('[type=submit]')
+        .on('input', function (e) {
         let input = this;
 
         checkEmpty(input);
@@ -15,6 +17,9 @@ $(function () {
         let main_error_block = $('[name=auth_form]').children('.error_block');
         let urlRequest = '/assets/includes/authentication/auth.php';
         let urlRedirect = '/';
+
+        checkCaptcha(grecaptcha.getResponse(), main_error_block);
+        console.log($(form).find('input'))
 
         formEvent(form, main_error_block, urlRequest, urlRedirect)
 

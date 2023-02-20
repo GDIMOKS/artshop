@@ -2,7 +2,8 @@
 
 class User
 {
-    private $id, $first_name, $last_name, $patronymic_name, $role_id, $email, $password, $phone, $birthday;
+    protected $id, $first_name, $last_name, $patronymic_name;
+    private $role_id, $email, $password, $phone, $birthday;
 
     public function __construct($userInfo)
     {
@@ -53,10 +54,20 @@ class User
         $full_name = $this->first_name;
 
         if (!empty($this->last_name))
-            $full_name .= $this->last_name;
+            $full_name .= ' '.$this->last_name;
         if (!empty($this->patronymic_name))
-            $full_name .= $this->patronymic_name;
+            $full_name .= ' '.$this->patronymic_name;
 
         return $full_name;
+    }
+}
+
+class Author extends User {
+    public function __construct($authorInfo)
+    {
+        $this->id = $authorInfo['author_id'];
+        $this->first_name = $authorInfo['first_name'];
+        $this->last_name = $authorInfo['last_name'] ?? "";
+        $this->patronymic_name = $authorInfo['patronymic_name'] ?? "";
     }
 }

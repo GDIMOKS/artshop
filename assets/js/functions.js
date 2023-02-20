@@ -1,11 +1,3 @@
-// export let clearErrors = function (form_name) {
-//     let form = document.querySelector('[name='+ form_name +']');
-//     let error_blocks = form.querySelectorAll('.error_block');
-//
-//     for (let i = 0; i < error_blocks.length; i++)
-//         error_blocks[i].innerHTML = "";
-// }
-
 export let redirect = function(reference) {
     location.href = reference;
 }
@@ -20,7 +12,8 @@ export let checkCaptcha = function (captcha, error) {
 }
 
 export let checkFields = function (form) {
-    let inputs = $(form).find('input');
+    let inputs = $(form).find('input')
+        .not('[type=submit]')
 
     for (let i = 0; i < inputs.length; i++) {
         checkEmpty(inputs[i]);
@@ -28,7 +21,14 @@ export let checkFields = function (form) {
 }
 
 export let checkEmpty = function (input) {
-    let error_block = $('[name='+input.name+']').siblings('.error_block');
+    let error_block;
+
+    if (input.name != 'categories[]') {
+        error_block = $('[name='+input.name+']').siblings('.error_block');
+    } else {
+        error_block = $('.checkselect').children('.error_block');
+    }
+
 
     switch (input.name) {
         case 'first_name':
@@ -46,6 +46,30 @@ export let checkEmpty = function (input) {
         case 'password_2':
             forEmpty(error_block, input,"Не указано подтверждение пароля");
             break;
+
+        case 'name':
+            forEmpty(error_block, input,"Не указано название");
+            break;
+
+        case 'count':
+            forEmpty(error_block, input,"Не указано количество");
+            break;
+
+        case 'purchase_price':
+        case 'selling_price':
+            forEmpty(error_block, input,"Не указана цена");
+            break;
+
+        case 'categories[]':
+            let checked = $('.checkselect').find("input[type='checkbox']:checked").length;
+
+            if (checked == 0) {
+                error_block.text("Выберите категорию(-и)");
+            } else {
+                error_block.text("");
+            }
+            changeColor($('select[name=categories]'), error_block);
+            break;
     }
 }
 
@@ -61,12 +85,40 @@ export function checkValue(input) {
             if (!regExp.exec(input.value)){
                 error_block.text('Имя может содержать только кириллицу, пробел и следующие символы: \' , \( \) \. -');
             }
+            break;
+
+        case 'name':
+            let regExp1 = /^[А-Яа-яЁёa-zA-Z0-9' .(),-]+$/g;
+            if (!regExp1.exec(input.value)){
+                error_block.text('Может содержать латиницу, кириллицу, арабские цифры, пробел и следующие символы: \' , \( \) \. -');
+            }
 
             break;
 
-        // case 'email':
-        //
-        //     break;
+        case 'file':
+            break;
+
+        case 'count':
+            if (!Number.isInteger(+input.value)){
+                error_block.text('Может быть только целым');
+            }
+            if (+input.value < 0){
+                error_block.text('Не может быть меньше нуля');
+            }
+            break;
+        case 'selling_price':
+            if (+input.value < +$('input[name="purchase_price"]')[0].value) {
+                error_block.text('Не может быть < закупочной');
+            }
+        case 'purchase_price':
+            if (+input.value < 0){
+                error_block.text('Не может быть меньше нуля');
+            }
+            break;
+
+        case 'creation_date':
+
+            break;
 
         case 'password':
             if (input.value.length < 8) {
@@ -122,17 +174,16 @@ let inputIsEmpty = function (value) {
 
 export let changeColor = function (element, error_block) {
     if (error_block.text().length == 0) {
-        element.style.borderColor = '#e3e3e3';
-        element.style.backgroundColor = '#fcfcfc';
+        $(element).css('border-color', '#e3e3e3');
+        $(element).css('background-color', '#fcfcfc');
     } else {
-        element.style.borderColor = 'red';
-        element.style.backgroundColor = '#FF000009';
+        $(element).css('border-color', 'red');
+        $(element).css('background-color', '#FF000009');
     }
 }
 
 export let formEvent = function (form, main_error_block, urlRequest, urlRedirect) {
     checkFields(form);
-    checkCaptcha(grecaptcha.getResponse(), main_error_block);
 
     if (main_error_block.text().length != 0)
         return;

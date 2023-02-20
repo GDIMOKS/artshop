@@ -69,7 +69,7 @@ nav {
 .cabinet_button_text{
     display: flex;
     height: 100%;
-    width: 150px;
+    /*width: 150px;*/
     align-items: center;
     justify-content: center;
 }

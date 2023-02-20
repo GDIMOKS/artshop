@@ -31,8 +31,8 @@ if (empty($_SESSION['auth']))
 
     <div class="workspace">
         <div class="profile_info">
-            <div>
-                <div class="profile_status">
+            <div class="profile_status">
+                <div>
                     <p>
                         Личный кабинет <span class="special_text"><?= $_SESSION['user']->getFullName()?></span>
                     </p>
@@ -49,40 +49,34 @@ if (empty($_SESSION['auth']))
             </div>
 
 
-            <a class="button cabinet_button" href="../includes/logout.php">
+            <a class="button logout" href="../includes/authentication/logout.php">
                 <div class="cabinet_button_text">Выйти из аккаунта</div>
             </a>
         </div>
-        <div class="profile_settings">
-            <div class="profile_buttons">
-                <?php switch ($_SESSION['user']->getRoleName()): ?><?php case 'Владелец': ?>
-                    <a class="button check-profit" href="owner_cabinet/check-profit.php">Просмотр прибыли</a>
-                    <a class="button check-rating" href="owner_cabinet/check-rating.php">Просмотр рейтинга</a>
 
+        <div class="profile_buttons">
+            <?php switch ($_SESSION['user']->getRoleName()): ?><?php case 'Владелец': ?>
+                <a class="button check-profit" href="owner_cabinet/check-profit.php">Просмотр прибыли</a>
+                <a class="button check-rating" href="owner_cabinet/check-rating.php">Просмотр рейтинга</a>
+                <?php break; ?>
 
-                    <?php break; ?>
+            <?php case 'Покупатель': ?>
+                <a class="button edit-info">Редактирование данных</a>
+                <a class="button show-orders" href="orders.php">Просмотр заказов</a>
 
-                <?php case 'Покупатель': ?>
-                    <a class="button edit-info">Редактирование данных</a>
-                    <a class="button show-orders" href="orders.php">Просмотр заказов</a>
+                <?php break; ?>
 
-                    <?php break; ?>
+            <?php case 'Продавец': ?>
+                <a class="button add-product" href="cabinet_subpages/seller/add_product.php">Добавить товар</a>
+                <a class="button update-product" href="cabinet_subpages/seller/update_product.php">Изменить товар</a>
+                <a class="button delete-product" href="cabinet_subpages/seller/delete_product.php">Удалить товар</a>
+                <a class="button update-status" href="cabinet_subpages/seller/update_status.php">Изменить статус заказа</a>
 
-                <?php case 'Продавец': ?>
-                    <a class="button add-product" href="seller_cabinet/add-product.php">Добавить товар</a>
-                    <a class="button update-product" href="seller_cabinet/update-product.php">Изменить товар</a>
-                    <a class="button delete-product" href="seller_cabinet/delete-product.php">Удалить товар</a>
-                    <a class="button update-status" href="seller_cabinet/change-order-status.php">Изменить статус заказа</a>
+                <?php break; ?>
 
-                    <?php break; ?>
-
-                <?php endswitch ?>
-            </div>
+            <?php endswitch ?>
         </div>
 
-        <iframe class="custom_iframe" src="../../../index.php">
-
-        </iframe>
 
     </div>
     <script type="module" src="../js/cabinet_functions.js"></script>

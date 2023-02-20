@@ -2,7 +2,7 @@
 session_start();
 
 require_once __DIR__ . "/cookie_functions.php";
-//require_once dirname(__DIR__, 2) . "/classes/user.php";
+require_once dirname(__DIR__, 2) . "/classes/user.php";
 
 
 if (empty($_SESSION['auth'])) {

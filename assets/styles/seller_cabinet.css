@@ -1,0 +1,130 @@
+.grid-container {
+    display: grid;
+    width: 100%;
+
+    grid-template-areas:
+    "name name"
+    "photo count_date"
+    "photo category_author"
+    "photo prices"
+    "photo file"
+;
+    /*height: 600px;*/
+    gap: 20px;
+}
+
+.grid-item {
+    border-radius: 5px;
+    align-items: stretch;
+    display: flex;
+    /*justify-content: center;*/
+    justify-content: flex-start;
+
+    /*align-items: center;*/
+    flex-direction: column;
+    width: 100%;
+    height: 100px;
+}
+
+
+.photo {
+    grid-area: photo;
+    max-width: 500px;
+    width: 500px;
+    height: 500px;
+    max-height: 500px;
+    border-bottom: 2px solid #e7e7e7;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px #00000010;
+
+}
+
+.picture {
+    object-position: center center;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.count_date {
+    grid-area: count_date;
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+
+    gap: 20px;
+}
+
+.date {
+    grid-area: date;
+}
+
+.count{
+    grid-area: count;
+}
+
+.author {
+    grid-area: author;
+}
+
+.category {
+    grid-area: category;
+}
+
+.purchase_price {
+    grid-area: purchase_price;
+}
+
+.selling_price {
+    grid-area: selling_price;
+}
+
+.prices {
+    grid-area: prices;
+
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    gap: 20px;
+}
+
+.name {
+    grid-area: name;
+}
+
+.category_author {
+    grid-area: category_author;
+
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+
+    gap: 20px;
+
+}
+.file {
+    grid-area: file;
+}
+
+.grid-container input {
+    width: 100%;
+    box-shadow: 0 0 10px #00000010;
+}
+
+.grid-item select {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-bottom: 2px solid #e7e7e7;
+    box-shadow: 0 0 10px #00000010;
+
+}
+.update_picture_form,
+.add_picture_form{
+    width: 100%;
+    margin: 50px;
+    background-color: #fdfdfd;
+}
