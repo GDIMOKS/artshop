@@ -2,6 +2,7 @@
 session_start();
 require_once '../../config.php';
 require_once '../../functions.php';
+require_once '../cabinet_functions.php';
 
 error_reporting(-1);
 
@@ -29,10 +30,11 @@ $result = $stmt->get_result();
 if (!empty($result)) {
     exit (json_encode(['code' => 'ERROR', 'message' => 'Ошибка во время добавления товара!']));
 } else {
+    $id = $connection->insert_id;
     foreach ($_POST['categories'] as $category) {
         $query = "INSERT INTO `pictures_categories` (`picture_id`, `category_id`) VALUES (?,?)";
         $stmt = $connection->prepare($query);
-        $stmt->bind_param("ii", $connection->insert_id(), $category);
+        $stmt->bind_param("ii", $id, $category);
         $stmt->execute();
     }
     exit (json_encode(['code' => 'OK', 'message' => 'Товар успешно добавлен!','mode'=>'add','image' => $config['uploads'] . $file_name]));

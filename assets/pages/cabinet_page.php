@@ -8,7 +8,7 @@ require_once "../includes/functions.php";
 
 if (empty($_SESSION['auth']))
 {
-    header('Location: /assets/pages/signin.php');
+    header('Location: /assets/pages/signin_page.php');
 }
 ?>
 <!DOCTYPE html>
@@ -67,10 +67,10 @@ if (empty($_SESSION['auth']))
                 <?php break; ?>
 
             <?php case 'Продавец': ?>
-                <a class="button add-product" href="cabinet_subpages/seller/add_product.php">Добавить товар</a>
-                <a class="button update-product" href="cabinet_subpages/seller/update_product.php">Изменить товар</a>
-                <a class="button delete-product" href="cabinet_subpages/seller/delete_product.php">Удалить товар</a>
-                <a class="button update-status" href="cabinet_subpages/seller/update_status.php">Изменить статус заказа</a>
+                <a class="button add-product" href="cabinet_subpages/seller/add_product_page.php">Добавить товар</a>
+                <a class="button update-product" href="cabinet_subpages/seller/update_product_page.php">Изменить товар</a>
+                <a class="button delete-product" href="cabinet_subpages/seller/delete_product_page.php">Удалить товар</a>
+                <a class="button update-status" href="cabinet_subpages/seller/update_order_page.php">Изменить статус заказа</a>
 
                 <?php break; ?>
 

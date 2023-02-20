@@ -329,7 +329,7 @@ export function pictureFormEvent(form, formData, image, main_error_block, urlReq
                     main_error_block.text(result.message);
                     $(form).find('img')[0].src = result.image;
                     if (result.mode == 'update')
-                        setTimeout(redirect, 1000, '/assets/pages/cabinet_subpages/seller/update_product.php');
+                        setTimeout(redirect, 1000, '/assets/pages/cabinet_subpages/seller/update_product_page.php');
                  }
 
             },

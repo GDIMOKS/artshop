@@ -11,7 +11,7 @@ require_once "../../../includes/functions.php";
 
 if (empty($_SESSION['auth']))
 {
-    header('Location: /assets/pages/signin.php');
+    header('Location: /assets/pages/signin_page.php');
 }
 ?>
     <!DOCTYPE html>
@@ -60,10 +60,10 @@ require_once "../../../includes/header.php";
     </div>
 
     <div class="profile_buttons">
-        <a class="button add-product" href="/assets/pages/cabinet_subpages/seller/add_product.php">Добавить товар</a>
-        <a class="button update-product" href="/assets/pages/cabinet_subpages/seller/update_product.php">Изменить товар</a>
-        <a class="button delete-product" href="/assets/pages/cabinet_subpages/seller/delete_product.php">Удалить товар</a>
-        <a class="button update-status" href="/assets/pages/cabinet_subpages/seller/update_status.php">Изменить статус заказа</a>
+        <a class="button add-product" href="/assets/pages/cabinet_subpages/seller/add_product_page.php">Добавить товар</a>
+        <a class="button update-product" href="/assets/pages/cabinet_subpages/seller/update_product_page.php">Изменить товар</a>
+        <a class="button delete-product" href="/assets/pages/cabinet_subpages/seller/delete_product_page.php">Удалить товар</a>
+        <a class="button update-status" href="/assets/pages/cabinet_subpages/seller/update_order_page.php">Изменить статус заказа</a>
     </div>
 
     <form class="picture_form">

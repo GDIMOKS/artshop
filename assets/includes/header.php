@@ -17,9 +17,9 @@
 
                     <?php
                         if (!empty($_SESSION['auth'])) {
-                            $href = '/assets/pages/cabinet.php';
+                            $href = '/assets/pages/cabinet_page.php';
                         } else {
-                            $href = '/assets/pages/signin.php';
+                            $href = '/assets/pages/signin_page.php';
                         }
                     ?>
 
