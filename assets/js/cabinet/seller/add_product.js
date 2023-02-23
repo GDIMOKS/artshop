@@ -18,6 +18,7 @@ $(function () {
         main_error_block.text("");
         let urlRequest = '/assets/includes/cabinet/seller/add_picture.php';
         let formData = new FormData();
+        formData.append('seller_action', 'add');
 
         pictureFormEvent(form, formData, image, main_error_block, urlRequest);
 

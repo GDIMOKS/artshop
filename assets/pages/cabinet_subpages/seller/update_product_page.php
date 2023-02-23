@@ -60,31 +60,38 @@ require_once "../../../includes/header.php";
     </div>
 
     <div class="profile_buttons">
+        <?php if ($_SESSION['user']->getRoleName() == "Продавец+"): ?>
+            <a class="button edit-info">Редактирование данных</a>
+            <a class="button show-orders" href="orders.php">Просмотр заказов</a>
+        <?php endif;?>
         <a class="button add-product" href="/assets/pages/cabinet_subpages/seller/add_product_page.php">Добавить товар</a>
         <a class="button update-product" href="/assets/pages/cabinet_subpages/seller/update_product_page.php">Изменить товар</a>
         <a class="button delete-product" href="/assets/pages/cabinet_subpages/seller/delete_product_page.php">Удалить товар</a>
-        <a class="button update-status" href="/assets/pages/cabinet_subpages/seller/update_order_page.php">Изменить статус заказа</a>
+        <a class="button update-status" href="/assets/pages/cabinet_subpages/seller/change_order_status_page.php">Изменить статус заказа</a>
     </div>
 
-    <form class="picture_form">
-        <?php
-        $query = "SELECT * FROM pictures";
-        $stmt = $connection->prepare($query);
-        $stmt->execute();
-        $pictures = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        ?>
-        <select class="upd_select" style="width: 100%">
-            <option value="default">Выберите картину...</option>
-            <?php foreach ($pictures as $picture): ?>
-                <option data-id="<?=$picture['picture_id']?>"><?=$picture['name']?></option>
-            <?php endforeach; ?>
-        </select>
-    </form>
+    <div class="update_forms">
+        <form class="picture_form">
+            <?php
+            $query = "SELECT * FROM pictures";
+            $stmt = $connection->prepare($query);
+            $stmt->execute();
+            $pictures = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            ?>
+            <select class="upd_select" style="width: 100%">
+                <option value="default">Выберите картину...</option>
+                <?php foreach ($pictures as $picture): ?>
+                    <option data-id="<?=$picture['picture_id']?>"><?=$picture['name']?></option>
+                <?php endforeach; ?>
+            </select>
+        </form>
 
-    <?php
-    $form = new ProductForm('update_picture_form', 'update_picture_form', 'Изменить товар');
-    $form->print();
-    ?>
+        <?php
+        $form = new ProductForm('update_picture_form', 'update_picture_form', 'Изменить товар');
+        $form->print();
+        ?>
+    </div>
+
 
 
 

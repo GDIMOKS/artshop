@@ -1,4 +1,5 @@
 <?php
+require_once "assets/includes/classes/user.php";
 require_once "assets/includes/classes/product.php";
 
 session_start();
@@ -27,11 +28,10 @@ require_once "assets/includes/authentication/cookie/cookie.php";
         require_once "assets/includes/header.php";
     ?>
     <?php
-    $query = "SELECT * FROM pictures";
+    $query = "SELECT * FROM pictures WHERE is_deleted = 0";
     $stmt = $connection->prepare($query);
     $stmt->execute();
     $products = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-//    debug($pictures);
     ?>
 
     <div class="workspace">

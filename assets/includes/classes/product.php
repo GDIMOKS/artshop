@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 class Product
@@ -36,28 +37,36 @@ class Product
         // TODO: Implement __destruct() method.
     }
 
-    public function printMiniature() {
+    public function printMiniature($action='view') {
+        require_once "user.php";
         global $config;
         $count = $_SESSION['cart'][$this->id]['count'] ?? 0;
-        echo '<div class="product" >'.
-                '<div class="product_image">'.
-                    '<a href="#"><img src="'.$config['uploads'].$this->image.'" alt="'.$this->name.'" class="mini_image"></a>'.
-                '</div>'.
-                '<div class="product_info">'.
-                    '<a class="product_name" href="#">'.$this->name.'</a>'.
-                    '<div class="product_price">'.
-                    $this->selling_price .' ₽'.
-                    '</div>'.
-                '</div>'.
-                '<div class="product_buttons">'.
-                    '<div class="product_btn_left">'.
-                        '<div class="product_button card-btn del-from-cart" data-id="'.$this->id.'">−</div>'.
-                        '<div class="product_count" id="count-'.$this->id.'">'. $count .'</div>'.
-                        '<div class="product_button card-btn add-to-cart" data-id="'.$this->id.'">+</div>'.
-                    '</div>'.
-                    '<a class="product_button product_btn_right" href="/assets/pages/cart_page.php">В корзину</a>'.
-                '</div>'.
-            '</div>';
+    ?>
+        <div class="product" >
+            <div class="product_image">
+                <a href="#"><img src="<?=$config['uploads'].$this->image?>" alt="<?=$this->name?>" class="mini_image"></a>
+            </div>
+            <div class="product_info">
+                <a class="product_name" href="#"><?=$this->name?></a>
+                    <div class="product_price">
+                    <?=$this->selling_price .' ₽'?>
+                    </div>
+            </div>
+
+            <div class="product_buttons">
+                <?php if ($action =='view' && !empty($_SESSION['user']) && $_SESSION['user']->getRoleName() != 'Продавец'): ?>
+                    <div class="product_btn_left">
+                        <div class="product_button card-btn del-from-cart mini_left_button" data-id="<?=$this->id?>">−</div>
+                            <div class="product_count" id="count-<?=$this->id?>"><?=$count?></div>
+                        <div class="product_button card-btn add-to-cart" data-id="<?=$this->id?>">+</div>
+                    </div>
+                    <a class="product_button product_btn_right" href="/assets/pages/cart_page.php">В корзину</a>
+                <?php elseif ($action == 'delete'):?>
+                    <div class="product_button product_btn del-from-db" data-id="<?=$this->id?>">Удалить</div>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php
     }
 
     public function printFull() {

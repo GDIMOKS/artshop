@@ -95,11 +95,10 @@ class Cart
                 }
 
                 $status = 1;
-                $date = date("Y.m.d H:i:s");
 
-                $query = "INSERT INTO orders_statuses (status_id, order_id, time) VALUES (?, ?, ?)";
+                $query = "INSERT INTO orders_statuses (status_id, order_id) VALUES (?, ?)";
                 $stmt = $connection->prepare($query);
-                $stmt->bind_param("iis", $status, $order_id, $date);
+                $stmt->bind_param("ii", $status, $order_id);
                 $stmt->execute();
 
                 $result = $stmt->get_result();

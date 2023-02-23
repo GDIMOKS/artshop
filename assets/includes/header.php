@@ -1,17 +1,18 @@
 <header>
     <div class="header_up">
         <ul>
-            <li>
+            <li class="header_up_li">
                 <a href="/" class="logo"><?=$config['logo']?></a>
 
             </li>
 
-            <li>
+            <li class="header_up_li cabinet_buttons">
+                <?php if (!empty($_SESSION['user']) && $_SESSION['user']->getRoleName() != 'Продавец'): ?>
                 <a href="/assets/pages/cart_page.php" class="header_button cart-button">
                     <div>Корзина</div>
                     <div id="cart-num"><?=$_SESSION['cart.total_count'] ?? 0 ?></div>
                 </a>
-
+                <?php endif; ?>
                 <?php
                     if (!empty($_SESSION['auth'])) {
                         $href = '/assets/pages/cabinet_page.php';

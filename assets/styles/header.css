@@ -12,7 +12,7 @@
     margin: auto;
 }
 
-.header_up li{
+.header_up_li{
     display: flex;
     justify-content: center;
     height: 100%;
@@ -63,13 +63,18 @@
 .cabinet_button_text{
     display: flex;
     height: 100%;
-    /*width: 150px;*/
+    width: 100%;
     align-items: center;
     justify-content: center;
 }
 
 .cabinet_button{
     cursor: pointer;
+}
+
+.cabinet_buttons {
+    display: flex;
+    justify-content: flex-end;
 }
 
 /* Logo */

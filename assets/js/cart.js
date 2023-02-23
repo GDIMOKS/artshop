@@ -22,7 +22,7 @@ $(function () {
                         $('.sum').text('Общая сумма: ' + result.total_sum + ' рублей');
 
                         let cost = $(parent).find('.cart_cost_container');
-                        $(cost).text('Цена: ' + result.picture.selling_price * result.count + ' рублей');
+                        $(cost).text('Сумма: ' + result.picture.selling_price * result.count + ' рублей');
                     }
                 } else {
                     alert(result.picture);
@@ -57,7 +57,7 @@ $(function () {
                         $('.sum').text('Общая сумма: ' + result.total_sum + ' рублей');
 
                         let cost = $(parent).find('.cart_cost_container');
-                        $(cost).text('Цена: ' + result.picture.selling_price * result.count + ' рублей');
+                        $(cost).text('Сумма: ' + result.picture.selling_price * result.count + ' рублей');
                         if (result.count == 0) {
                             $(parent).remove();
                         }

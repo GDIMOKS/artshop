@@ -2,13 +2,14 @@
 require_once "../includes/classes/user.php";
 require_once "../includes/classes/product.php";
 require_once "../includes/classes/cart.php";
+require_once "../includes/classes/order.php";
 
 session_start();
 
 require_once "../includes/config.php";
 require_once "../includes/functions.php";
 
-if (empty($_SESSION['auth']))
+if (empty($_SESSION['auth']) || $_SESSION['user']->getRoleName() == 'Продавец')
 {
     header('Location: /assets/pages/signin_page.php');
 }
@@ -36,49 +37,19 @@ if (empty($_SESSION['auth']))
     ?>
 
     <div class="workspace">
-        <h1>Оформление заказа</h1>
-        <div class="order">
 
-            <?php if (isset($_SESSION['cart'])): ?>
-                <?php foreach ($_SESSION['cart'] as $id => $picture): ?>
-                    <a class="product_area" href="#">
-                        <div class="name_container">
-                            <div class="cart_image_container">
-                                <img class="mini_image" src="<?=$config['uploads'].$picture['picture']->image?>" alt="<?=$picture['picture']->name?>" class="mini_image">
-                            </div>
-                            <div class="product_info_container">
-                                <div class="text title"><?=$picture['picture']->name?></div>
-                                <div class="product_price_container text"><?=$picture['picture']->selling_price?> рублей</div>
-                            </div>
+        <?php
+        if (isset($_SESSION['cart'])) {
+            $order = new Order();
+            $order->pictures = $_SESSION['cart'];
+            $order->amount = $_SESSION['cart.total_sum'];
+            $order->countOfPictures = $_SESSION['cart.total_count'];
 
-                        </div>
-                        <div class="cart_container">
-                            <div class="text count_text_container">
-                                Количество: &nbsp;
-                                <div class="" id="count-<?=$id?>" style="font-weight: normal;">
-                                    <?=$picture['count'] ?? 0 ?>
-                                </div>
-                                &nbsp; штук
-                            </div>
-                            <div class="cart_buttons">
-                                <div class="product_button del-from-cart product_btn_left"  data-id="<?=$id?>">
-                                    −
-                                </div>
-                                <div class="product_button add-to-cart product_btn_right"  data-id="<?=$id?>">
-                                    +
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text cart_cost_container">Цена: <?=$picture['picture']->selling_price * $picture['count']?> рублей</div>
-                    </a>
-                <?php endforeach; ?>
-            <?php endif;?>
-            <div class="sum_count">
-                <div class="text count">Всего товаров: <?=$_SESSION['cart.total_count'] ?? 0?></div>
-                <div class="text sum">Общая сумма: <?=$_SESSION['cart.total_sum'] ?? 0?> рублей</div>
-            </div>
-            <button class="button checkout">Оформить заказ</button>
-        </div>
+            echo '<h1>Оформление заказа</h1>';
+            $order->printOrder('checkout');
+        }
+        ?>
+
     </div>
     <script type="module" src="/assets/js/cart.js"></script>
 

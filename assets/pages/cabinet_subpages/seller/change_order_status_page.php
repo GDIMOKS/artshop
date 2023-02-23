@@ -1,5 +1,8 @@
 <?php
+
 require_once "../../../includes/classes/user.php";
+require_once "../../../includes/classes/order.php";
+//require_once "../../../includes/classes/product.php";
 require_once "../../../includes/classes/category.php";
 require_once "../../../includes/classes/form.php";
 
@@ -18,11 +21,13 @@ if (empty($_SESSION['auth']))
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Добавить товар</title>
+    <title>Изменить статус заказа</title>
 
     <link rel="stylesheet" href="/assets/styles/header.css">
     <link rel="stylesheet" href="/assets/styles/main.css">
-    <link rel="stylesheet" href="/assets/styles/select_checkbox.css">
+    <link rel="stylesheet" href="/assets/styles/orders.css">
+    <link rel="stylesheet" href="/assets/styles/product.css">
+
     <link rel="stylesheet" href="/assets/styles/seller_cabinet.css">
 
     <script type="text/javascript" src="/assets/js/jquery-3.6.1.min.js"></script>
@@ -70,19 +75,43 @@ require_once "../../../includes/header.php";
         <a class="button update-status" href="/assets/pages/cabinet_subpages/seller/change_order_status_page.php">Изменить статус заказа</a>
     </div>
 
-    <?php
-    $form = new ProductForm('add_picture_form', 'add_picture_form', 'Добавить товар');
-    $form->print();
-    ?>
 
+    <div class="orders">
+        <?php
+        $query = "SELECT 
+                orders.*,
+                statuses.name,
+                statuses.status_id,
+                orders_statuses.time
+              FROM orders
+              INNER JOIN orders_statuses
+              ON orders_statuses.order_id = orders.order_id
+              INNER JOIN statuses
+              ON orders_statuses.status_id = statuses.status_id
+              WHERE statuses.name != 'Отменён' AND
+              orders_statuses.time = (
+                    SELECT MAX(time) 
+                    FROM orders_statuses 
+                    WHERE orders_statuses.order_id=orders.order_id)
+              ORDER BY orders_statuses.time";
+
+        $stmt = $connection->prepare($query);
+        $stmt->execute();
+
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        foreach ($result as $orderInfo) {
+            $order = new Order($orderInfo);
+            $order->printOrder('change_status');
+        }?>
+
+    </div>
 
 
 
 
 </div>
-<script type="module" src="/assets/js/cabinet_functions.js"></script>
-<script type="module" src="/assets/js/cabinet/seller/add_product.js"></script>
-<script type="module" src="/assets/js/cabinet/seller/select_checkbox.js"></script>
+<script type="module" src="/assets/js/cabinet/seller/change_order_status.js"></script>
 
 </body>
 </html>

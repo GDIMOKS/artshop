@@ -213,7 +213,9 @@ class Input
 
             case 'file':
                 echo '<div class="'.$this->class.'">
-                        <img class="picture" src="" alt="'.$this->label.'">
+                        <div class="image_container">
+                            <img class="picture" src="" alt="'.$this->label.'" >
+                        </div>
                       </div>
                       <div class="grid-item '.$this->type.'">
                         <label>'.$this->label.'</label>

@@ -66,11 +66,14 @@ if (empty($_SESSION['auth']))
 
                 <?php break; ?>
 
+            <?php case 'Продавец+': ?>
+                <a class="button edit-info">Редактирование данных</a>
+                <a class="button show-orders" href="orders.php">Просмотр заказов</a>
             <?php case 'Продавец': ?>
                 <a class="button add-product" href="cabinet_subpages/seller/add_product_page.php">Добавить товар</a>
                 <a class="button update-product" href="cabinet_subpages/seller/update_product_page.php">Изменить товар</a>
                 <a class="button delete-product" href="cabinet_subpages/seller/delete_product_page.php">Удалить товар</a>
-                <a class="button update-status" href="cabinet_subpages/seller/update_order_page.php">Изменить статус заказа</a>
+                <a class="button update-status" href="cabinet_subpages/seller/change_order_status_page.php">Изменить статус заказа</a>
 
                 <?php break; ?>
 

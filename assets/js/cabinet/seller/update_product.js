@@ -6,15 +6,28 @@ import {
 
 let image = false;
 
-$(function () {
 
-
+export function updateProduct(){
     $('input[name="imageHREF"]').change(function (e) {
         image = e.target.files[0];
     });
 
     checkInputs('update_picture_form');
 
+    $('.update_picture_form').on('submit', function (e) {
+        e.preventDefault();
+
+        let form = this;
+        let main_error_block = $('[name=update_picture_form]').children('.error_block');
+        main_error_block.text("");
+        let urlRequest = '/assets/includes/cabinet/seller/update_picture.php';
+        let formData = new FormData();
+        formData.append('seller_action', 'update')
+
+        pictureFormEvent(form, formData, image, main_error_block, urlRequest);
+    })
+}
+export function updateListOfProducts(){
     $('.upd_select').on('change', function (e) {
         e.preventDefault();
 
@@ -46,18 +59,8 @@ $(function () {
         });
 
     });
-
-    $('.update_picture_form').on('submit', function (e) {
-        e.preventDefault();
-
-        let form = this;
-        let main_error_block = $('[name=update_picture_form]').children('.error_block');
-        main_error_block.text("");
-        let urlRequest = '/assets/includes/cabinet/seller/update_picture.php';
-        let formData = new FormData();
-        formData.append('seller_action', 'update')
-
-        pictureFormEvent(form, formData, image, main_error_block, urlRequest);
-    })
-
+}
+$(function () {
+    updateListOfProducts();
+    updateProduct();
 })

@@ -47,6 +47,8 @@ class User
                 return 'Продавец';
             case 4:
                 return 'Гость';
+            case 5:
+                return 'Продавец+';
         }
     }
 

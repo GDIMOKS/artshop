@@ -84,6 +84,7 @@ a {
 }
 
 html {
+    min-height: 101vh;
     min-width: 1200px;
     margin: auto;
     background-color: white/*#ebebeb*/;

@@ -1,3 +1,8 @@
+import {
+    updateProduct,
+    updateListOfProducts
+} from "./cabinet/seller/update_product.js";
+
 export let redirect = function(reference) {
     location.href = reference;
 }
@@ -328,8 +333,17 @@ export function pictureFormEvent(form, formData, image, main_error_block, urlReq
                     $(main_error_block).addClass('error_block_good');
                     main_error_block.text(result.message);
                     $(form).find('img').attr('src', result.image);
-                    // if (result.mode == 'update')
-                    //     setTimeout(redirect, 1000, '/assets/pages/cabinet_subpages/seller/update_product_page.php');
+
+                    main_error_block.text(result.message);
+
+                    if (result.mode == 'update') {
+                        setTimeout(function () {
+                            $('.update_forms').load(location.href + " .update_forms",function (){
+                                updateListOfProducts();
+                                updateProduct();
+                            });
+                        }, 1000, );
+                    }
                  }
 
             },
