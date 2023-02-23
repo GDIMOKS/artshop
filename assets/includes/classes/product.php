@@ -54,7 +54,7 @@ class Product
             </div>
 
             <div class="product_buttons">
-                <?php if ($action =='view' && !empty($_SESSION['user']) && $_SESSION['user']->getRoleName() != 'Продавец'): ?>
+                <?php if ($action =='view' && $_SESSION['user']->getRoleName() != 'Продавец'): ?>
                     <div class="product_btn_left">
                         <div class="product_button card-btn del-from-cart mini_left_button" data-id="<?=$this->id?>">−</div>
                             <div class="product_count" id="count-<?=$this->id?>"><?=$count?></div>

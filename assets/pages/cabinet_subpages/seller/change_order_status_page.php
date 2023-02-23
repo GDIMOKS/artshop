@@ -12,7 +12,7 @@ session_start();
 require_once "../../../includes/config.php";
 require_once "../../../includes/functions.php";
 
-if (empty($_SESSION['auth']))
+if (empty($_SESSION['auth']) || $_SESSION['user']->getRoleName() != 'Продавец' || $_SESSION['user']->getRoleName() != 'Продавец+')
 {
     header('Location: /assets/pages/signin_page.php');
 }
@@ -40,40 +40,9 @@ require_once "../../../includes/header.php";
 ?>
 
 <div class="workspace">
-    <div class="profile_info">
-        <div class="profile_status">
-            <div>
-                <p>
-                    Личный кабинет <span class="special_text"><?= $_SESSION['user']->getFullName()?></span>
-                </p>
-                <p>
-                    Статус: <span class="special_text"><?=$_SESSION['user']->getRoleName()?></span>
-                </p>
-            </div>
-            <div class="time_div">
-                Текущая дата:
-                <span class="current_time special_text">
-                        <?=getDateTime()?>
-                    </span>
-            </div>
-        </div>
-
-
-        <a class="button logout" href="/assets/includes/authentication/logout.php">
-            <div class="cabinet_button_text">Выйти из аккаунта</div>
-        </a>
-    </div>
-
-    <div class="profile_buttons">
-        <?php if ($_SESSION['user']->getRoleName() == "Продавец+"): ?>
-            <a class="button edit-info">Редактирование данных</a>
-            <a class="button show-orders" href="orders.php">Просмотр заказов</a>
-        <?php endif;?>
-        <a class="button add-product" href="/assets/pages/cabinet_subpages/seller/add_product_page.php">Добавить товар</a>
-        <a class="button update-product" href="/assets/pages/cabinet_subpages/seller/update_product_page.php">Изменить товар</a>
-        <a class="button delete-product" href="/assets/pages/cabinet_subpages/seller/delete_product_page.php">Удалить товар</a>
-        <a class="button update-status" href="/assets/pages/cabinet_subpages/seller/change_order_status_page.php">Изменить статус заказа</a>
-    </div>
+    <?php
+    require_once "../../../includes/cabinet/cabinet_general.php";
+    ?>
 
 
     <div class="orders">
@@ -92,10 +61,13 @@ require_once "../../../includes/header.php";
               orders_statuses.time = (
                     SELECT MAX(time) 
                     FROM orders_statuses 
-                    WHERE orders_statuses.order_id=orders.order_id)
+                    WHERE orders_statuses.order_id=orders.order_id) AND
+                    (orders.seller_id = ? || orders.seller_id IS NULL)
               ORDER BY orders_statuses.time";
 
+        $seller_id = $_SESSION['user']->id;
         $stmt = $connection->prepare($query);
+        $stmt->bind_param("i", $seller_id);
         $stmt->execute();
 
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -111,6 +83,7 @@ require_once "../../../includes/header.php";
 
 
 </div>
+<script type="module" src="/assets/js/cabinet_functions.js"></script>
 <script type="module" src="/assets/js/cabinet/seller/change_order_status.js"></script>
 
 </body>

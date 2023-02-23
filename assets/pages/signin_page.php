@@ -1,5 +1,6 @@
 <?php
 require_once "../includes/classes/form.php";
+require_once "../includes/classes/user.php";
 
 session_start();
 require_once "../includes/config.php";

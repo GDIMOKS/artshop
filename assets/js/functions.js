@@ -354,4 +354,21 @@ export function pictureFormEvent(form, formData, image, main_error_block, urlReq
     }
 }
 
+export function checkDate(begin, end) {
 
+    if (begin.value != '' && end.value != '') {
+        let begin_error_block = $(begin).siblings('.error_block');
+        let end_error_block = $(end).siblings('.error_block')
+        $(begin_error_block).text('');
+        $(end_error_block).text('');
+
+        if ($(begin).val() > $(end).val()) {
+            $(begin_error_block).text('Начальная дата должна быть меньше конечной');
+            $(end_error_block).text('Конечная дата должна быть больше начальной');
+        }
+
+        changeColor(begin, begin_error_block);
+        changeColor(end, end_error_block);
+    }
+
+}

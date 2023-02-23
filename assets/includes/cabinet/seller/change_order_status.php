@@ -17,7 +17,18 @@ if (isset($_POST['seller_action'])) {
 
         $result = $stmt->get_result();
         if (!$result) {
-            echo json_encode(['code' => 'OK']);
+            $user_id = $_SESSION['user']->id;
+            $query = "UPDATE orders SET seller_id=?";
+            $stmt = $connection->prepare($query);
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            if (!$result) {
+                echo json_encode(['code' => 'OK']);
+            } else {
+                echo json_encode(['code' => 'ERROR', 'message' => 'Error! Seller was not pinned!']);
+            }
         } else {
             echo json_encode(['code' => 'ERROR', 'message' => 'Error! Status was not changed!']);
         }

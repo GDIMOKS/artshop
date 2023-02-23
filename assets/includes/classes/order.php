@@ -174,6 +174,9 @@ class Order
             <div class="sum_count">
                 <div class="text count">Всего товаров: <?=$this->countOfPictures?></div>
                 <div class="text sum">Общая сумма: <?=$this->amount?> рублей</div>
+                <?php if ($action == 'view'): ?>
+                    <div class="text status">Статус: <?=$this->currentStatus['name']?></div>
+                <?php endif; ?>
             </div>
 
             <?php if ($action == 'change_status'): ?>

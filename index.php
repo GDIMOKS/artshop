@@ -8,6 +8,11 @@ require_once "assets/includes/config.php";
 require_once "assets/includes/functions.php";
 require_once "assets/includes/authentication/cookie/cookie.php";
 
+if (empty($_SESSION['user'])) {
+    $_SESSION['user'] = new User();
+
+}
+
 ?>
 <!DOCTYPE html>
 <html>

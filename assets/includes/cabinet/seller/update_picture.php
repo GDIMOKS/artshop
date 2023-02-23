@@ -38,16 +38,32 @@ if (isset($_POST['seller_action'])) {
             break;
 
         case 'update':
-//            $query = "SELECT COUNT('picture_id') AS `total_count` FROM `pictures` WHERE (`picture_id` = ?)";
-//            $stmt = $connection->prepare($query);
-//            $stmt->bind_param("s", $_POST['picture_id']);
-//            $stmt->execute();
-//
-//            $is_exist = $stmt->get_result()->fetch_assoc();
-//
-//            if ($is_exist['total_count'] == 0) {
-//                exit (json_encode(['code' => 'ERROR', 'message' => 'Такого товара не существует!']));
-//            }
+            $query = "SELECT COUNT(picture_id) AS total_count
+                      FROM pictures 
+                      WHERE (name = ?)";
+            $stmt = $connection->prepare($query);
+            $stmt->bind_param("s", $_POST['name']);
+            $stmt->execute();
+
+            $is_exist = $stmt->get_result()->fetch_assoc();
+
+            if ($is_exist['total_count'] == 0) {
+                exit (json_encode(['code' => 'ERROR', 'message' => 'Такого товара не существует!']));
+            }
+
+            $query = "SELECT COUNT(picture_id) AS total_count
+                      FROM pictures 
+                      WHERE (name = ?) AND
+                            is_deleted = 0";
+            $stmt = $connection->prepare($query);
+            $stmt->bind_param("s", $_POST['name']);
+            $stmt->execute();
+
+            $is_exist = $stmt->get_result()->fetch_assoc();
+
+            if ($is_exist['total_count'] != 0) {
+                exit (json_encode(['code' => 'ERROR', 'message' => 'Товар с таким названием уже существует!']));
+            }
 
             $file_name = checkImage();
             $query = "UPDATE pictures 
@@ -57,6 +73,7 @@ if (isset($_POST['seller_action'])) {
                           selling_price=?,
                           imageHREF=?
                       WHERE picture_id=?";
+
 
             $stmt = $connection->prepare($query);
             $stmt->bind_param("ssiisi",
@@ -70,9 +87,8 @@ if (isset($_POST['seller_action'])) {
             $stmt->execute();
 
             $result = $stmt->get_result();
-            if (!empty($result)) {
-                exit (json_encode(['code' => 'ERROR', 'message' => 'Ошибка во время изменения товара!']));
-            } else {
+
+            if (!$result) {
                 $query = "DELETE FROM `pictures_categories` WHERE `picture_id` = ?";
                 $stmt = $connection->prepare($query);
                 $stmt->bind_param("s", $_POST['picture_id']);
@@ -85,6 +101,8 @@ if (isset($_POST['seller_action'])) {
                     $stmt->execute();
                 }
                 exit (json_encode(['code' => 'OK', 'message' => 'Товар успешно обновлен!', 'mode'=>'update','image' => $config['uploads'] . $file_name]));
+            } else {
+                exit (json_encode(['code' => 'ERROR', 'message' => 'Ошибка во время изменения товара!']));
             }
 
 

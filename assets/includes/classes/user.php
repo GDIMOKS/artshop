@@ -5,13 +5,13 @@ class User
     private $id, $first_name, $last_name, $patronymic_name;
     private $role_id, $email, $password, $phone, $birthday;
 
-    public function __construct($userInfo)
+    public function __construct($userInfo = 0)
     {
         $this->id = $userInfo['user_id'];
         $this->first_name = $userInfo['first_name'];
         $this->last_name = $userInfo['last_name'] ?? "";
         $this->patronymic_name = $userInfo['patronymic_name'] ?? "";
-        $this->role_id = $userInfo['role_id'];
+        $this->role_id = $userInfo['role_id'] ?? 4;
         $this->email = $userInfo['email'];
         $this->password = $userInfo['password'];
         $this->phone = $userInfo['phone'] ?? "";
@@ -42,7 +42,7 @@ class User
             case 1:
                 return 'Владелец';
             case 2:
-                return 'Студент';
+                return 'Покупатель';
             case 3:
                 return 'Продавец';
             case 4:
