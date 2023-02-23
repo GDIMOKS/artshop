@@ -67,7 +67,7 @@ class ProductForm extends Form {
     private $class;
     private $button;
     private $categories = array();
-    private $authors = array();
+//    private $authors = array();
     private $pairInputs = array();
 
     public  function __construct($name, $class, $submit_name) {
@@ -78,16 +78,17 @@ class ProductForm extends Form {
     public function fillForm($connection) {
         $this->setInput('Изображение', 'file', 'imageHREF', 'Выберите изображение', '', 'grid-item photo');
         $this->setInput('Название картины*', 'text', 'name', 'Введите название', '', 'grid-item name');
+        $this->setInput('Дата создания', 'number', 'creation_date', 'Введите год создания', '', 'grid-item date');
 
-        $this->setPairInput('count_date',
-            new Input('Количество*', 'number', 'count', 'Введите количество', '', 'grid-item count'),
-            new Input('Дата создания', 'date', 'creation_date', 'Выберите дату создания', '', 'grid-item date'));
+//        $this->setPairInput('count_date',
+//            new Input('Количество*', 'number', 'count', 'Введите количество', '', 'grid-item count'),
+//            new Input('Дата создания', 'date', 'creation_date', 'Выберите дату создания', '', 'grid-item date'));
 
         $this->setPairInput('prices',
             new Input('Цена закупки*', 'number', 'purchase_price', 'Введите цену закупки', '', 'grid-item purchase_price'),
             new Input('Цена продажи*', 'number', 'selling_price', 'Введите цену продажи', '', 'grid-item selling_price'));
 
-        $this->setAuthors($connection);
+//        $this->setAuthors($connection);
         $this->setCategories($connection);
     }
 
@@ -107,16 +108,6 @@ class ProductForm extends Form {
         }
     }
 
-    public function setAuthors($connection) {
-        $query = "SELECT * FROM authors";
-        $stmt = $connection->prepare($query);
-        $stmt->execute();
-        $authors = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-
-        foreach ($authors as $author) {
-            $this->authors[] = new Author($author);
-        }
-    }
 
     public function setPairInput($class, $input1, $input2) {
         $pairInput = [
@@ -127,16 +118,6 @@ class ProductForm extends Form {
         $this->pairInputs[] = $pairInput;
     }
 
-    public function printAuthorsSelect() {
-        echo '<div class="grid-item author">
-                <label>Автор*</label>
-                <select name="authors" required>';
-        foreach ($this->authors as $author) {
-            echo '<option data-id="'.$author->id.'">'.htmlspecialchars($author->getFullName()).'</option>';
-        }
-        echo '</select>
-              </div>';
-    }
 
     public function printCategoriesSelect() {
         echo '<div class="grid-item category">
@@ -156,13 +137,6 @@ class ProductForm extends Form {
                     <p class="error_block"></p>
                 </div>
               </div>';
-    }
-
-    public function printCategoriesAuthors($connection) {
-        echo '<div class="category_author">';
-        $this->printAuthorsSelect();
-        $this->printCategoriesSelect($connection);
-        echo '</div>';
     }
 
     public function printPairInputs(){
@@ -186,7 +160,7 @@ class ProductForm extends Form {
 
         $this->printPairInputs();
 
-        $this->printCategoriesAuthors($connection);
+        $this->printCategoriesSelect($connection);
         echo '    </div>
                 <input class="button" type="submit" value="'.$this->button.'">
                 <div class="error_block"></div>

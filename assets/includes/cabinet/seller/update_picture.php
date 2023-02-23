@@ -10,13 +10,8 @@ error_reporting(-1);
 if (isset($_POST['seller_action'])) {
     switch ($_POST['seller_action']) {
         case 'choose':
-            $query = "SELECT pictures.*, 
-                             authors.first_name, 
-                             authors.last_name, 
-                             authors.patronymic_name
+            $query = "SELECT pictures.*
                         FROM pictures  
-                        INNER JOIN authors
-                        ON authors.author_id = pictures.author_id
                         WHERE picture_id =?";
             $stmt = $connection->prepare($query);
             $stmt->bind_param("i", $_POST['picture_id']);
@@ -25,15 +20,6 @@ if (isset($_POST['seller_action'])) {
             $result = $stmt->get_result()->fetch_assoc();
 
             $result['imageHREF'] = $config['uploads'] . $result['imageHREF'];
-
-            $authorInfo = [
-                'author_id' => $result['author_id'],
-                'first_name'=> $result['first_name'],
-                'last_name' => $result['last_name'],
-                'patronymic_name' => $result['patronymic_name']
-                ];
-            $result['author'] = new Author($authorInfo);
-            $result['author'] = $result['author']->getFullName();
 
             $query = "SELECT category_id FROM pictures_categories WHERE picture_id = ?";
             $stmt = $connection->prepare($query);
@@ -51,34 +37,30 @@ if (isset($_POST['seller_action'])) {
             break;
 
         case 'update':
-            $query = "SELECT COUNT('id') AS `total_count` FROM `pictures` WHERE (`picture_id` = ?)";
-            $stmt = $connection->prepare($query);
-            $stmt->bind_param("s", $_POST['picture_id']);
-            $stmt->execute();
-
-            $is_exist = $stmt->get_result()->fetch_assoc();
-
-            if ($is_exist['total_count'] == 0) {
-                exit (json_encode(['code' => 'ERROR', 'message' => 'Такого товара не существует!']));
-            }
+//            $query = "SELECT COUNT('picture_id') AS `total_count` FROM `pictures` WHERE (`picture_id` = ?)";
+//            $stmt = $connection->prepare($query);
+//            $stmt->bind_param("s", $_POST['picture_id']);
+//            $stmt->execute();
+//
+//            $is_exist = $stmt->get_result()->fetch_assoc();
+//
+//            if ($is_exist['total_count'] == 0) {
+//                exit (json_encode(['code' => 'ERROR', 'message' => 'Такого товара не существует!']));
+//            }
 
             $file_name = checkImage();
             $query = "UPDATE pictures 
                       SET name=?, 
-                          author_id=?,
                           creation_date=?,
-                          count=?,
                           purchase_price=?,
                           selling_price=?,
                           imageHREF=?
                       WHERE picture_id=?";
 
             $stmt = $connection->prepare($query);
-            $stmt->bind_param("sisiiisi",
+            $stmt->bind_param("ssiisi",
                 $_POST['name'],
-                 $_POST['author_id'],
-                      $_POST['creation_date'],
-                      $_POST['count'],
+                 $_POST['date'],
                       $_POST['purchase_price'],
                       $_POST['selling_price'],
                       $file_name,

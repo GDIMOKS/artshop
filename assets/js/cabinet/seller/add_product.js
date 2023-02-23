@@ -1,4 +1,4 @@
-import {checkEmpty, checkFields, checkValue, formEvent, pictureFormEvent} from "../../functions.js";
+import {pictureFormEvent, checkInputs} from "../../functions.js";
 
 let image = false;
 
@@ -8,16 +8,7 @@ $(function () {
         image = e.target.files[0];
     });
 
-    $('[name=add_picture_form]').find('input')
-        .not('[type=submit]')
-        .on('input', function (e) {
-
-        let input = this;
-
-        checkEmpty(input);
-        if (this.type != 'checkbox')
-            checkValue(input);
-    });
+    checkInputs('add_picture_form');
 
     $('[name=add_picture_form]').on('submit', function (e) {
         e.preventDefault();

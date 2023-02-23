@@ -84,9 +84,8 @@ a {
 }
 
 html {
-    width: 100vw;
-    min-height: 100vh;
-    height: auto;
+    min-width: 1200px;
+    margin: auto;
     background-color: white/*#ebebeb*/;
 }
 
@@ -109,8 +108,8 @@ ul {
     align-items: center;
     margin: auto;
     /*height: max-content;*/
-    width: 1000px;
-    max-width: 1000px;
+    width: 1200px;
+    max-width: 1200px;
     /*flex-wrap: wrap;*/
     height: 100%;
 }

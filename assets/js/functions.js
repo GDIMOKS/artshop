@@ -20,6 +20,19 @@ export let checkFields = function (form) {
     }
 }
 
+export function checkInputs(formName) {
+    $('[name="'+formName+'"]').find('input')
+        .not('[type=submit]')
+        .on('input', function (e) {
+
+            let input = this;
+
+            checkEmpty(input);
+            if (this.type != 'checkbox')
+                checkValue(input);
+        });
+}
+
 export let checkEmpty = function (input) {
     let error_block;
 
@@ -49,10 +62,6 @@ export let checkEmpty = function (input) {
 
         case 'name':
             forEmpty(error_block, input,"Не указано название");
-            break;
-
-        case 'count':
-            forEmpty(error_block, input,"Не указано количество");
             break;
 
         case 'purchase_price':
@@ -98,14 +107,6 @@ export function checkValue(input) {
         case 'file':
             break;
 
-        case 'count':
-            if (!Number.isInteger(+input.value)){
-                error_block.text('Может быть только целым');
-            }
-            if (+input.value < 0){
-                error_block.text('Не может быть меньше нуля');
-            }
-            break;
         case 'selling_price':
             if (+input.value < +$('input[name="purchase_price"]')[0].value) {
                 error_block.text('Не может быть < закупочной');
@@ -117,7 +118,15 @@ export function checkValue(input) {
             break;
 
         case 'creation_date':
+            let today = new Date();
+            let year = today.getFullYear();
 
+            if (+input.value < 0) {
+                input.value = 0;
+            }
+            if (+input.value > year) {
+                input.value = year;
+            }
             break;
 
         case 'password':
@@ -237,10 +246,7 @@ export function fillUpdateProductForm(result) {
     form.find('input[name="name"]').val(result.picture.name ?? "");
     form.find('img').attr('src', result.picture.imageHREF ?? "");
     form.data('id', result.picture.picture_id ?? "");
-    // console.log(form.data('id'))
-    form.find('input[name="count"]').val(result.picture.count ?? "");
     form.find('input[name="creation_date"]').val(result.picture.creation_date ?? "");
-    form.find('input[name="authors"]').val(result.picture.author ?? "");
     form.find('input[name="selling_price"]').val(result.picture.selling_price ?? "");
     form.find('input[name="purchase_price"]').val(result.picture.purchase_price ?? "");
 
@@ -286,17 +292,11 @@ export function pictureFormEvent(form, formData, image, main_error_block, urlReq
             formData.append('categories[]', uniqueCategories[i]);
         }
 
-
-        let author_sel = form.querySelector('[name="authors"]');
         formData.append('picture_id', $(form).data('id'));
         formData.append('name', form.querySelector('input[name="name"]').value);
-        formData.append('count', form.querySelector('input[name="count"]').value);
         formData.append('date', form.querySelector('input[name="creation_date"]').value);
-        formData.append('author_id', author_sel.options[author_sel.selectedIndex].dataset.id);
         formData.append('selling_price', form.querySelector('input[name="selling_price"]').value);
         formData.append('purchase_price', form.querySelector('input[name="purchase_price"]').value);
-
-
 
         if (image == false) {
             let img = $(form).find('img').attr('src');
@@ -327,9 +327,9 @@ export function pictureFormEvent(form, formData, image, main_error_block, urlReq
                 } else {
                     $(main_error_block).addClass('error_block_good');
                     main_error_block.text(result.message);
-                    $(form).find('img')[0].src = result.image;
-                    if (result.mode == 'update')
-                        setTimeout(redirect, 1000, '/assets/pages/cabinet_subpages/seller/update_product_page.php');
+                    $(form).find('img').attr('src', result.image);
+                    // if (result.mode == 'update')
+                    //     setTimeout(redirect, 1000, '/assets/pages/cabinet_subpages/seller/update_product_page.php');
                  }
 
             },

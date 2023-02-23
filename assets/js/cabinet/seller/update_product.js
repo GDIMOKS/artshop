@@ -1,11 +1,7 @@
 import {
-    checkEmpty,
-    checkFields,
-    checkValue,
     fillUpdateProductForm,
-    formEvent,
     pictureFormEvent,
-    setChecked
+    checkInputs
 } from "../../functions.js";
 
 let image = false;
@@ -16,6 +12,8 @@ $(function () {
     $('input[name="imageHREF"]').change(function (e) {
         image = e.target.files[0];
     });
+
+    checkInputs('update_picture_form');
 
     $('.upd_select').on('change', function (e) {
         e.preventDefault();
@@ -58,7 +56,6 @@ $(function () {
         let urlRequest = '/assets/includes/cabinet/seller/update_picture.php';
         let formData = new FormData();
         formData.append('seller_action', 'update')
-        // form.data('picture_id', result.picture.picture_id ?? "");
 
         pictureFormEvent(form, formData, image, main_error_block, urlRequest);
     })

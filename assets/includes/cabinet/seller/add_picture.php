@@ -6,7 +6,7 @@ require_once '../cabinet_functions.php';
 
 error_reporting(-1);
 
-$query = "SELECT COUNT('id') AS `total_count` FROM `pictures` WHERE (`name` = ?)";
+$query = "SELECT COUNT('picture_id') AS `total_count` FROM `pictures` WHERE (`name` = ?)";
 $stmt = $connection->prepare($query);
 $stmt->bind_param("s", $_POST['name']);
 $stmt->execute();
@@ -19,11 +19,11 @@ if ($is_exist['total_count'] != 0) {
 }
 $file_name = checkImage();
 
-$query = "INSERT INTO `pictures` (`name`, `author_id`, `creation_date`, `count`, `purchase_price`, `selling_price`, `imageHREF`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+$query = "INSERT INTO `pictures` (`name`, `creation_date`, `purchase_price`, `selling_price`, `imageHREF`) VALUES (?, ?, ?, ?, ?)";
 
 $date = (empty($_POST['date'])) ? null : $_POST['date'];
 $stmt = $connection->prepare($query);
-$stmt->bind_param("sisidds", $_POST['name'], $_POST['author_id'], $date, $_POST['count'] , $_POST['purchase_price'],  $_POST['selling_price'], $file_name);
+$stmt->bind_param("ssdds", $_POST['name'], $date, $_POST['purchase_price'],  $_POST['selling_price'], $file_name);
 $stmt->execute();
 
 $result = $stmt->get_result();

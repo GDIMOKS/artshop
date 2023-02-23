@@ -4,8 +4,9 @@
 
     grid-template-areas:
     "name name"
-    "photo count_date"
-    "photo category_author"
+    /*"photo count_date"*/
+    "photo date"
+    "photo category"
     "photo prices"
     "photo file"
 ;
@@ -46,15 +47,15 @@
     height: 100%;
 }
 
-.count_date {
-    grid-area: count_date;
-    display: flex;
-    flex-direction: row;
+/*.count_date {*/
+/*    grid-area: count_date;*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
 
-    width: 100%;
+/*    width: 100%;*/
 
-    gap: 20px;
-}
+/*    gap: 20px;*/
+/*}*/
 
 .date {
     grid-area: date;
