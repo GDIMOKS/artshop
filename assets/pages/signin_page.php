@@ -1,12 +1,16 @@
 <?php
+require_once "../includes/classes/form.php";
+require_once "../includes/classes/user.php";
+
 session_start();
 require_once "../includes/config.php";
-require_once "../includes/classes/form.php";
+require_once "../includes/authentication/cookie/cookie.php";
 
 if (!empty($_SESSION['auth']))
 {
-    header('Location: /assets/pages/cabinet.php');
+    header('Location: /assets/pages/cabinet_page.php');
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,22 +32,24 @@ if (!empty($_SESSION['auth']))
     ?>
 
     <div class="workspace">
+
         <form class="auth_reg" name="auth_form">
             <?php
                 $form = new Form('auth_form');
                 $form->setInput('Электронная почта', 'email', 'email', 'Введите свой email', 'autofocus');
                 $form->setInput('Пароль', 'password', 'password', 'Введите пароль');
+                $form->setInput('Запомнить на этом устройстве', 'checkbox', 'remember_me', '');
 
                 $form->print();
-            ?>
 
+            ?>
 
             <div class="g-recaptcha" data-sitekey="<?php echo $config['SITE_KEY'] ?>" style="margin: 0px auto 20px; ";></div>
 
             <button class="button" type="submit">Авторизоваться</button>
 
             <p class="p_reg">
-                У вас нет аккаунта? - <a href="signup.php" class="a_reg">зарегистрируйтесь</a>!
+                У вас нет аккаунта? - <a href="signup_page.php" class="a_reg">зарегистрируйтесь</a>!
             </p>
 
             <div class="error_block">
@@ -55,7 +61,7 @@ if (!empty($_SESSION['auth']))
 
 
     </div>
-    <script type="module" src="../js/auth.js"></script>
+    <script type="module" src="../js/authentication/auth.js"></script>
 
     </body>
 </html>

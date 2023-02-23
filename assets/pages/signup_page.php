@@ -1,11 +1,14 @@
 <?php
+require_once "../includes/classes/form.php";
+require_once "../includes/classes/user.php";
+
 session_start();
 require_once "../includes/config.php";
-require_once "../includes/classes/form.php";
+require_once "../includes/authentication/cookie/cookie.php";
 
 if (!empty($_SESSION['auth']))
 {
-    header('Location: /assets/pages/cabinet.php');
+    header('Location: /assets/pages/cabinet_page.php');
 }
 ?>
 <!DOCTYPE html>
@@ -46,7 +49,7 @@ if (!empty($_SESSION['auth']))
             <button class="button" type="submit">Зарегистрироваться</button>
 
             <p class="p_reg">
-                У вас уже есть аккаунт? - <a href="signin.php" class="a_reg">авторизуйтесь</a>!
+                У вас уже есть аккаунт? - <a href="signin_page.php" class="a_reg">авторизуйтесь</a>!
             </p>
 
             <div class="error_block">
@@ -59,7 +62,7 @@ if (!empty($_SESSION['auth']))
 
     </div>
 
-    <script type="module" src="../js/register.js"></script>
+    <script type="module" src="../js/authentication/register.js"></script>
 
     </body>
 </html>

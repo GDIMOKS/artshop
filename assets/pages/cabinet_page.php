@@ -1,10 +1,14 @@
 <?php
+require_once "../includes/classes/user.php";
+
 session_start();
+
 require_once "../includes/config.php";
+require_once "../includes/functions.php";
 
 if (empty($_SESSION['auth']))
 {
-    header('Location: /assets/pages/signin.php');
+    header('Location: /assets/pages/signin_page.php');
 }
 ?>
 <!DOCTYPE html>
@@ -16,6 +20,7 @@ if (empty($_SESSION['auth']))
         <link rel="stylesheet" href="/assets/styles/header.css">
         <link rel="stylesheet" href="/assets/styles/main.css">
 
+
         <script type="text/javascript" src="/assets/js/jquery-3.6.1.min.js"></script>
 
     </head>
@@ -26,12 +31,13 @@ if (empty($_SESSION['auth']))
     ?>
 
     <div class="workspace">
-        <a class="button cabinet_button" href="../includes/logout.php">
-            <div class="cabinet_button_text">Выйти из аккаунта</div>
-        </a>
+        <?php
+        require_once "../includes/cabinet/cabinet_general.php";
+        ?>
 
     </div>
-    <script type="module" src="../js/auth.js"></script>
+
+    <script type="module" src="../js/cabinet_functions.js"></script>
 
     </body>
 </html>
