@@ -232,7 +232,8 @@ export let changeColor = function (element, error_block) {
 }
 
 export let formEvent = function (form, formData, main_error_block, urlRequest, urlRedirect) {
-    main_error_block.text("");
+    if (urlRedirect == '')
+        main_error_block.text("");
     checkFields(form);
 
     if (main_error_block.text().length != 0)

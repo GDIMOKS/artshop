@@ -59,9 +59,10 @@ if (isset($_POST['seller_action'])) {
             $query = "SELECT COUNT(picture_id) AS total_count
                       FROM pictures 
                       WHERE (name = ?) AND
-                            is_deleted = 0";
+                            is_deleted = 0 AND 
+                            picture_id != ?";
             $stmt = $connection->prepare($query);
-            $stmt->bind_param("s", $_POST['name']);
+            $stmt->bind_param("si", $_POST['name'], $_POST['picture_id']);
             $stmt->execute();
 
             $is_exist = $stmt->get_result()->fetch_assoc();

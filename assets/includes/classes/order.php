@@ -122,7 +122,7 @@ class Order
         global $config;
         foreach (array_reverse($this->pictures, true) as $id => $picture) {
         ?>
-            <a class="product_area" href="#">
+            <a class="product_area" href="/assets/pages/product_page.php?picture_id=<?=$picture['picture']->id?>">
                 <div class="name_container">
                     <div class="cart_image_container">
                         <img class="mini_image" src="<?=$config['uploads'].$picture['picture']->image?>" alt="<?=$picture['picture']->name?>" class="mini_image">

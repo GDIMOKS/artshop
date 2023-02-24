@@ -92,9 +92,10 @@ if (isset($_POST['client_action'])) {
             if (!password_verify($oldPassword, $currentPassword)) {
                 echo json_encode(['code' => 'ERROR', 'message' => 'Текущий пароль не совпадает!', 'type' => 'edit_password']);
             } else {
-                $query = "UPDATE users SET password=?";
+                $user_id = $_SESSION['user']->id;
+                $query = "UPDATE users SET password=? WHERE user_id=?";
                 $stmt = $connection->prepare($query);
-                $stmt->bind_param("s", $newPassword);
+                $stmt->bind_param("si", $newPassword, $user_id);
                 $stmt->execute();
 
                 $result = $stmt->get_result();
