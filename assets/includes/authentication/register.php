@@ -28,15 +28,15 @@ if ($user_exist['total_count'] == 0) {
 
     if (empty($result)) {
         $message = 'Вы успешно зарегистрировались!';
-        $output = ['status' => 'OK', 'message' => $message];
+        $output = ['code' => 'OK', 'message' => $message];
     } else {
         $message = 'Во время регистрации произошла ошибка!';
-        $output = ['status' => 'ERROR', 'message' => $message];
+        $output = ['code' => 'ERROR', 'message' => $message];
     }
 
 } else {
     $message = 'Пользователь с таким email уже существует!';
-    $output = ['status' => 'ERROR', 'message' => $message];
+    $output = ['code' => 'ERROR', 'message' => $message];
 }
 
 $connection->close();

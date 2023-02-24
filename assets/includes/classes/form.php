@@ -5,8 +5,8 @@ class Form
     protected $inputs = [];
     protected $form;
 
-    public  function __construct($form) {
-        $this->form = $form;
+    public  function __construct($name) {
+        $this->form = $name;
     }
 
     public function print()
@@ -75,6 +75,7 @@ class ProductForm extends Form {
         $this->button = $submit_name;
         parent::__construct($name);
     }
+
     public function fillForm($connection) {
         $this->setInput('Изображение', 'file', 'imageHREF', 'Выберите изображение', '', 'grid-item photo');
         $this->setInput('Название картины*', 'text', 'name', 'Введите название', '', 'grid-item name');
@@ -163,6 +164,41 @@ class ProductForm extends Form {
         $this->printCategoriesSelect($connection);
         echo '    </div>
                 <input class="button" type="submit" value="'.$this->button.'">
+                <div class="error_block"></div>
+              </form>';
+    }
+}
+
+class ClientForm extends Form {
+    private $class;
+    private $button;
+
+    public  function __construct($name, $class, $submit_name) {
+        $this->class = $class;
+        $this->button = $submit_name;
+        parent::__construct($name);
+    }
+
+    public function fillForm() {
+        $this->setInput('Имя*', 'text', 'first_name', 'Введите имя', '', 'grid-item first_name');
+        $this->setInput('Фамилия', 'text', 'last_name', 'Введите фамилию', '', 'grid-item last_name');
+        $this->setInput('Отчество', 'text', 'patronymic_name', 'Введите отчество', '', 'grid-item patronymic_name');
+        $this->setInput('Электронная почта*', 'email', 'email', 'Введите электронную почту', '', 'grid-item email');
+        $this->setInput('Дата рождения', 'date', 'birthday', 'Выберите дату рождения', '', 'grid-item birthday');
+        $this->setInput('Номер телефона', 'text', 'phone', 'Введите номер телефона', '', 'grid-item phone');
+    }
+
+    public function print() {
+        $this->fillForm();
+
+        echo '<form class="'.$this->class.'" name="'.$this->form.'">';
+        echo '<div class="grid-container">';
+        foreach ($this->inputs as $input) {
+            $input->print();
+        }
+
+        echo '    </div>
+                <input class="button" type="submit" value="'.$this->button.'" style="margin-top: 30px">
                 <div class="error_block"></div>
               </form>';
     }

@@ -1,10 +1,16 @@
 <?php
+require_once '../../classes/user.php';
+
+
 session_start();
 require_once '../../config.php';
 require_once '../../functions.php';
 
 error_reporting(-1);
-
+if (empty($_SESSION['auth']) || $_SESSION['user']->getRoleName() != 'Владелец')
+{
+    header('Location: /assets/pages/signin_page.php');
+}
 if (isset($_POST['owner_action'])) {
     switch ($_POST['owner_action']) {
         case 'rating':

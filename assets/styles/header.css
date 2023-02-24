@@ -1,102 +1,104 @@
+/** {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    box-sizing: border-box;*/
+/*    font-family: Gabriola, sans-serif;*/
+/*    font-size: 24px;*/
+/*    text-decoration: none;*/
+/*}*/
+
+.header_up,
+.header_down {
+    min-width: 1200px;
+    /*width: 100vw;*/
+}
+
 .header_up {
-    background: #E0E0E0FF;
     height: 40px;
-}
-
-.header_up ul{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    width: 1200px;
-    margin: auto;
-}
-
-.header_up_li{
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    min-width: 20%;
+    background: #e0e0e0ff;
 }
 
 .header_down {
     background: #7e4726;
-    height: 40px;
 }
 
-.header_down ul {
-    display: flex;
-    height: 100%;
+.header_up > nav {
     width: 1200px;
+    height: inherit;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.header_down > nav {
+    width: 1200px;
+    margin: 0 auto;
+    display: flex;
     justify-content: center;
     align-items: center;
-    margin: auto;
 }
 
-.header_down li {
+.cartAndCabinet {
     display: flex;
-    min-width: 20%;
-    width: 20%;
-    height: inherit;
-    justify-content: center;
-}
-
-.header_down li:hover{
-    background: #5b331b;
 }
 
 .categories_text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     color: white;
-    height: 100%;
-    width: 100%;
+    flex: 1 1 auto;
+    text-align: center;
 }
 
-.categories_text:hover{
+.categories_text:hover {
+    background: #5b331b;
     text-decoration: underline;
 }
 
+/* nav:hover ~ .num1,
+.extra:hover {
+    display: block;
+} */
 
-/* Cabinet button*/
-.cabinet_button_text{
+.cat1:hover ~ .num1,
+.num1:hover {
+    display: block;
+}
+
+.cat2:hover ~ .num2,
+.num2:hover {
+    display: block;
+}
+
+.cat3:hover ~ .num3,
+.num3:hover {
+    display: block;
+}
+
+.cat4:hover ~ .num4,
+.num4:hover {
+    display: block;
+}
+
+.cat5:hover ~ .num5,
+.num5:hover {
+    display: block;
+}
+
+.cart_button,
+.cabinet_button {
+    width: 180px;
     display: flex;
-    height: 100%;
-    width: 100%;
-    align-items: center;
     justify-content: center;
-}
-
-.cabinet_button{
-    cursor: pointer;
-}
-
-.cabinet_buttons {
-    display: flex;
-    justify-content: flex-end;
-}
-
-/* Logo */
-.logo{
-    display: flex;
     align-items: center;
-    height: 100%;
-    font-size: 36px;
+    cursor: pointer;
+    font-size: large;
     color: #000000;
-    font-family: Gabriola;
 }
 
-.logo:hover{
-    color: #7e4726;
-}
-
-/*     Cart    */
-.cart-button {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    cursor: pointer;
+.cart_button:hover,
+.cabinet_button:hover {
+    background: #9d9d9d;
+    color: #ffffff;
 }
 
 #cart-num {
@@ -106,26 +108,65 @@
     border-radius: 10px;
     margin-left: 10px;
     background-color: #cb6800;
-    color: #FFFFFF;
+    color: #ffffff;
     text-align: center;
     justify-content: center;
     align-items: center;
 }
 
-.header_button {
+/* Logo */
+.logo {
     display: flex;
     justify-content: center;
-    /*padding: 10px;*/
-    width: 180px;
-    height: 100%;
-    text-align: center;
-    background: #E0E0E0FF;
-    cursor: pointer;
-    border: unset;
-    font-size: large;
+    align-items: center;
+    font-size: 36px;
     color: #000000;
+
+    height: 100%;
+
 }
-.header_button:hover{
-    background: #9d9d9d;
+
+.logo:hover {
+    color: #7e4726;
+}
+
+.extra {
+    margin: 0 auto;
+    width: 1200px;
+    position: absolute;
+    display: none;
+    left: 50%;
+    transform: translate(-50%);
+    top:81px;
+    background-color: #c07f59;
+
+    border-radius: 0 0 5px 5px;
+    padding: 20px 30px;
+}
+
+.extraMenu {
+    display: flex;
+    gap: 50px;
+}
+
+.extraMenuItem {
+    display: flex;
+    flex-direction: column;
+    /* flex: 1 1 auto; */
+    width: 33%;
+    padding: 0 0 0 20px;
+    border-left: #ffffff solid 1px;
+}
+
+.extra a {
     color: #ffffff;
+}
+
+.extra a:hover {
+    opacity: 0.5;
+}
+
+.nameOfSubCategory {
+    font-weight: 600;
+    letter-spacing: 0.2em;
 }

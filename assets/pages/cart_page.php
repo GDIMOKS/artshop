@@ -3,6 +3,8 @@ require_once "../includes/classes/user.php";
 require_once "../includes/classes/product.php";
 require_once "../includes/classes/cart.php";
 require_once "../includes/classes/order.php";
+require_once "../includes/classes/category.php";
+
 
 session_start();
 

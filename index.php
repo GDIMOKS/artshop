@@ -1,6 +1,8 @@
 <?php
 require_once "assets/includes/classes/user.php";
 require_once "assets/includes/classes/product.php";
+require_once "assets/includes/classes/category.php";
+
 
 session_start();
 
@@ -10,7 +12,6 @@ require_once "assets/includes/authentication/cookie/cookie.php";
 
 if (empty($_SESSION['user'])) {
     $_SESSION['user'] = new User();
-
 }
 
 ?>
