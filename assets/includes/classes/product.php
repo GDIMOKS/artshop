@@ -103,7 +103,7 @@ class Product
                 <div class="product_author">Автор: &nbsp;
                     <?php
                     if ($this->author['name'] != '')
-                        echo '<a href="/assets/pages/categories.php?category_id='.$this->author['category_id'].'">'. $this->author['name'] .'</a>';
+                        echo '<a href="/assets/pages/categories_page.php?category_id='.$this->author['category_id'].'">'. $this->author['name'] .'</a>';
                     else
                         echo 'Без автора';
                     ?>

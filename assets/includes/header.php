@@ -1,45 +1,56 @@
 <header>
     <div class="header_up">
-        <ul>
-            <li class="header_up_li">
-                <a href="/" class="logo"><?=$config['logo']?></a>
-
-            </li>
-
-            <li class="header_up_li cabinet_buttons">
-                <?php if (!empty($_SESSION['user']) && $_SESSION['user']->getRoleName() != 'Продавец'): ?>
-                <a href="/assets/pages/cart_page.php" class="header_button cart-button">
-                    <div>Корзина</div>
-                    <div id="cart-num"><?=$_SESSION['cart.total_count'] ?? 0 ?></div>
+        <nav>
+            <a href="/" class="logo"><?=$config['logo']?></a>
+            <div class="cartAndCabinet">
+                <a href="/assets/pages/cart_page.php" class="cart_button">
+                    <span>Корзина</span>
+                    <span id="cart-num">0</span>
                 </a>
-                <?php endif; ?>
-                <?php
-                    if (!empty($_SESSION['auth'])) {
-                        $href = '/assets/pages/cabinet_page.php';
-                    } else {
-                        $href = '/assets/pages/signin_page.php';
-                    }
-                ?>
-
-                <a class="header_button cabinet_button" href="<?=$href?>">
+                <a href="/assets/pages/cabinet_page.php" class="cabinet_button">
                     <div class="cabinet_button_text">Личный кабинет</div>
                 </a>
-            </li>
-        </ul>
+            </div>
+        </nav>
     </div>
-
-    <?php
-        $query = "SELECT * FROM `categories` WHERE `parentcategory_id` IS NULL";
-        $result = $connection->query($query);
-        $main_categories = $result->fetch_all(MYSQLI_ASSOC);
-    ?>
     <div class="header_down">
-        <ul>
-            <?php foreach ($main_categories as $category): ?>
-                <li>
-                    <a class="categories_text" href="/assets/pages/categories.php?category=<?=$category['category_id']?>"><?= $category['name'] ?></a>
-                </li>
+        <nav>
+            <?php
+            $query = "SELECT * FROM categories";
+            $result = $connection->query($query);
+            $categories = $result->fetch_all(MYSQLI_ASSOC);
+            $main_categories = array();
+            foreach ($categories as $category) {
+                $main_categories[] = new Category($category);
+            }
+
+            foreach ($main_categories as $category) {
+                $category->setChildren($main_categories);
+                $category->setAllParents();
+            }
+            ?>
+            <?php foreach ($main_categories as $id => $main_category): ?>
+            <?php
+            ?>
             <?php endforeach; ?>
-        </ul>
+
+            <?php foreach ($main_categories as $id => $main_category): ?>
+
+            <a class="categories_text cat<?=$id+1?>" href="/assets/pages/categories_page.php?category_id=<?=$main_category->id?>&category_name=<?=$main_category->name?>"><?=$main_category->name?></a>
+            <div class="extra num<?=$id+1?>">
+                <div class="extraMenu">
+                    <?php foreach ($main_category->children as $sub_category): ?>
+                    <div class="extraMenuItem">
+                        <a href="/assets/pages/categories_page.php?category_id=<?=$sub_category->id?>&category_name=<?=$sub_category->name?>" class="nameOfSubCategory"><?=$sub_category->name?></a>
+                        <?php foreach ($sub_category->children as $child_category): ?>
+                            <a href="/assets/pages/categories_page.php?category_id=<?=$child_category->id?>&category_name=<?=$child_category->name?>"><?=$child_category->name?></a>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php endforeach; ?>
+
+        </nav>
     </div>
 </header>

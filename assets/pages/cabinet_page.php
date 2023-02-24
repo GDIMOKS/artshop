@@ -1,5 +1,7 @@
 <?php
 require_once "../includes/classes/user.php";
+require_once "../includes/classes/category.php";
+
 
 session_start();
 
