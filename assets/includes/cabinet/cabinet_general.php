@@ -3,7 +3,7 @@
     <div class="profile_status">
         <div>
             <p>
-                Личный кабинет <span class="special_text"><?= $_SESSION['user']->getFullName()?></span>
+                Личный кабинет <span class="special_text full_name"><?= $_SESSION['user']->getFullName()?></span>
             </p>
             <p>
                 Статус: <span class="special_text"><?=$_SESSION['user']->getRoleName()?></span>

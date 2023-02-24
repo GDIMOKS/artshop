@@ -52,9 +52,7 @@ if (!empty($_SESSION['auth']))
                 У вас нет аккаунта? - <a href="signup_page.php" class="a_reg">зарегистрируйтесь</a>!
             </p>
 
-            <div class="error_block">
-
-            </div>
+            <div class="error_block"></div>
         </form>
 
 

@@ -31,6 +31,7 @@ export function checkInputs(formName) {
         .on('input', function (e) {
 
             let input = this;
+            $(input).siblings('.error_block').text("");
 
             checkEmpty(input);
             if (this.type != 'checkbox')
@@ -57,6 +58,8 @@ export let checkEmpty = function (input) {
             forEmpty(error_block, input,"Не указана электронная почта");
             break;
 
+        case 'old_password':
+        case 'new_password':
         case 'password':
             forEmpty(error_block, input,"Не указан пароль");
             break;
@@ -89,15 +92,45 @@ export let checkEmpty = function (input) {
 
 export function checkValue(input) {
     let error_block = $('[name='+input.name+']').siblings('.error_block');
+    let textRegExp = /^[А-Яа-яЁё' .(),-]+$/g;
 
     if (error_block.text().length != 0)
         return;
 
+
     switch (input.name) {
+        case 'phone':
+            if (input.value.length != 0) {
+                let phoneRegExp = /^[0-9]+$/g
+                if (!phoneRegExp.exec(input.value)){
+                    error_block.text('Только цифры от 0 до 9');
+                }
+
+                if (input.value.length > 11) {
+                    error_block.text('Максимум 11 цифр');
+                }
+
+            }
+            break;
+
+        case 'patronymic_name':
+        case 'last_name':
+            if (input.value.length != 0) {
+                if (input.value.length > 45) {
+                    error_block.text('Максимум 45 символов');
+                }
+                if (!textRegExp.exec(input.value)){
+                    error_block.text('Только кириллица, пробел и \' , \( \) \. -');
+                }
+
+            }
+            break;
         case 'first_name':
-            let regExp = /^[А-Яа-яЁё' .(),-]+$/g;
-            if (!regExp.exec(input.value)){
-                error_block.text('Имя может содержать только кириллицу, пробел и следующие символы: \' , \( \) \. -');
+            if (input.value.length > 45) {
+                error_block.text('Максимум 45 символов');
+            }
+            if (!textRegExp.exec(input.value)){
+                error_block.text('Только кириллица, пробел и \' , \( \) \. -');
             }
             break;
 
@@ -134,6 +167,8 @@ export function checkValue(input) {
             }
             break;
 
+        case 'old_password':
+        case 'new_password':
         case 'password':
             if (input.value.length < 8) {
                 error_block.text('Пароль не должен быть короче 8 символов');
@@ -196,7 +231,8 @@ export let changeColor = function (element, error_block) {
     }
 }
 
-export let formEvent = function (form, main_error_block, urlRequest, urlRedirect) {
+export let formEvent = function (form, formData, main_error_block, urlRequest, urlRedirect) {
+    main_error_block.text("");
     checkFields(form);
 
     if (main_error_block.text().length != 0)
@@ -212,7 +248,6 @@ export let formEvent = function (form, main_error_block, urlRequest, urlRedirect
         }
     }
     if (access) {
-        let formData = new FormData(form);
         $.ajax({
             url: urlRequest,
             method: 'post',
@@ -221,14 +256,19 @@ export let formEvent = function (form, main_error_block, urlRequest, urlRedirect
             contentType: false,
             data: formData,
             success: function (result) {
-                if (result.status == 'ERROR') {
-                    grecaptcha.reset();
+                if (result.code == 'ERROR') {
+                    if (urlRedirect != '')
+                        grecaptcha.reset();
                     main_error_block.text(result.message);
                 } else {
                     $(main_error_block).addClass('error_block_good');
                     main_error_block.text(result.message);
 
-                    setTimeout(redirect, 1000, urlRedirect);
+                    if (urlRedirect != '')
+                        setTimeout(redirect, 1000, urlRedirect);
+                    else if (result.type == 'edit_data')
+                        $('.full_name').text(result.full_name);
+
                 }
             }
         })

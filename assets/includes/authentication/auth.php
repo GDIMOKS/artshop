@@ -27,14 +27,14 @@ if (password_verify($password, $dbPassword)) {
     $_SESSION['user'] = $user;
 
     $_SESSION['message'] = 'Здравствуйте, ' . htmlspecialchars($_SESSION['user']->first_name). '!';
-    $output = ['status' => 'OK', 'message' => $_SESSION['message']];
+    $output = ['code' => 'OK', 'message' => $_SESSION['message']];
 
     if ($remember_me)
         updateCookie();
 
 } else {
     $_SESSION['message'] = 'Неправильные логин или пароль!';
-    $output = ['status' => 'ERROR', 'message' => $_SESSION['message']];
+    $output = ['code' => 'ERROR', 'message' => $_SESSION['message']];
 }
 $connection->close();
 

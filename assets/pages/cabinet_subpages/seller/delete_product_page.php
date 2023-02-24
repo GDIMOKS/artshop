@@ -11,7 +11,7 @@ session_start();
 require_once "../../../includes/config.php";
 require_once "../../../includes/functions.php";
 
-if (empty($_SESSION['auth']) || $_SESSION['user']->getRoleName() != 'Продавец' || $_SESSION['user']->getRoleName() != 'Продавец+')
+if (empty($_SESSION['auth']) || ($_SESSION['user']->getRoleName() != 'Продавец' && $_SESSION['user']->getRoleName() != 'Продавец+'))
 {
     header('Location: /assets/pages/signin_page.php');
 }

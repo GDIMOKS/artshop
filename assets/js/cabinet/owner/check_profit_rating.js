@@ -32,8 +32,6 @@ $(function () {
                 dataType: 'json',
                 success: function (result) {
                     if (result.code == 'ERROR') {
-                        if (name == 'profit')
-                            $('.grociers').empty();
                         $(main_error_block).text(result.message);
                     } else {
                         if (name == 'profit'){

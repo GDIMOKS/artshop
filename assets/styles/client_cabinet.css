@@ -1,0 +1,96 @@
+.grid-container {
+    display: grid;
+    width: 100%;
+
+    grid-template-areas:
+    "first_name email"
+    "last_name birthday"
+    "patronymic_name phone"
+;
+    /*height: 600px;*/
+    gap: 20px;
+}
+
+.grid-item {
+    border-radius: 5px;
+    align-items: stretch;
+    display: flex;
+    /*justify-content: center;*/
+    justify-content: flex-start;
+    /*align-items: center;*/
+    flex-direction: column;
+    width: 100%;
+    height: 100px;
+}
+
+.first_name {
+    grid-area: first_name;
+}
+
+.last_name{
+    grid-area: last_name;
+}
+
+.patronymic_name {
+    grid-area: patronymic_name;
+}
+
+.birthday {
+    grid-area: birthday;
+}
+
+.email {
+    grid-area: email;
+}
+
+.old_password {
+    grid-area: old_password;
+}
+
+.new_password {
+    grid-area: name;
+}
+.phone {
+    grid-area: phone;
+}
+
+.grid-container input {
+    width: 100%;
+    box-shadow: 0 0 10px #00000010;
+}
+
+.edit_form {
+    width: 50%;
+    background-color: #fdfdfd;
+}
+
+.password_form{
+    width: 40%;
+    height: fit-content;
+}
+.edit_forms {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 50px;
+}
+
+
+/*.update_picture_form {*/
+/*    width: 100%;*/
+/*    background-color: #fdfdfd;*/
+/*    margin-bottom: 50px;*/
+/*}*/
+/*.add_picture_form{*/
+/*    width: 100%;*/
+/*    margin: 50px;*/
+/*    background-color: #fdfdfd;*/
+/*    margin-bottom: 50px;*/
+/*}*/
+
+/*.update_forms {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    width: 100%;*/
+/*}*/

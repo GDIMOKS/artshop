@@ -17,11 +17,11 @@ $(function () {
         let main_error_block = $('[name=auth_form]').children('.error_block');
         let urlRequest = '/assets/includes/authentication/auth.php';
         let urlRedirect = '/';
+        let formData = new FormData(form)
 
         checkCaptcha(grecaptcha.getResponse(), main_error_block);
-        console.log($(form).find('input'))
 
-        formEvent(form, main_error_block, urlRequest, urlRedirect)
+        formEvent(form, formData, main_error_block, urlRequest, urlRedirect)
 
     });
 

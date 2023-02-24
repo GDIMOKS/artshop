@@ -10,17 +10,17 @@ session_start();
 require_once "../includes/config.php";
 require_once "../includes/functions.php";
 
-if (empty($_SESSION['auth']))
-{
-    header('Location: /assets/pages/signin_page.php');
-}
+//if (empty($_SESSION['auth']))
+//{
+//    header('Location: /assets/pages/signin_page.php');
+//}
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Редактировать даннные</title>
+    <title>Товар</title>
 
     <link rel="stylesheet" href="/assets/styles/header.css">
     <link rel="stylesheet" href="/assets/styles/main.css">
