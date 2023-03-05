@@ -6,10 +6,6 @@ session_start();
 
 class Cart
 {
-//    private $total_count = 0;
-//    private $total_sum = 0;
-//    private $pictures = array();
-
     public static function getTotalSum() {
         return $_SESSION['cart.total_sum'];
     }

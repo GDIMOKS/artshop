@@ -67,7 +67,6 @@ class ProductForm extends Form {
     private $class;
     private $button;
     private $categories = array();
-//    private $authors = array();
     private $pairInputs = array();
 
     public  function __construct($name, $class, $submit_name) {
@@ -80,10 +79,6 @@ class ProductForm extends Form {
         $this->setInput('Изображение', 'file', 'imageHREF', 'Выберите изображение', '', 'grid-item photo');
         $this->setInput('Название картины*', 'text', 'name', 'Введите название', '', 'grid-item name');
         $this->setInput('Дата создания', 'number', 'creation_date', 'Введите год создания', '', 'grid-item date');
-
-//        $this->setPairInput('count_date',
-//            new Input('Количество*', 'number', 'count', 'Введите количество', '', 'grid-item count'),
-//            new Input('Дата создания', 'date', 'creation_date', 'Выберите дату создания', '', 'grid-item date'));
 
         $this->setPairInput('prices',
             new Input('Цена закупки*', 'number', 'purchase_price', 'Введите цену закупки', '', 'grid-item purchase_price'),
@@ -268,10 +263,7 @@ class Input
                       </div>';
                 break;
         }
-
     }
-
-
 }
 
 
