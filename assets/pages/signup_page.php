@@ -45,7 +45,7 @@ if (!empty($_SESSION['auth']))
             ?>
 
 
-            <div class="g-recaptcha" data-sitekey="<?php echo $config['SITE_KEY'] ?>" style="margin: 0px auto 20px; ";></div>
+            <div class="g-recaptcha" data-sitekey="<?=$config['SITE_KEY'] ?>" style="margin: 0px auto 20px; ";></div>
 
             <button class="button" type="submit">Зарегистрироваться</button>
 

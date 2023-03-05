@@ -8,10 +8,10 @@ session_start();
 require_once './config.php';
 require_once './functions.php';
 
-if (empty($_SESSION['auth']) || $_SESSION['user']->getRoleName() == 'Продавец')
-{
-    header('Location: /assets/pages/signin_page.php');
-}
+//if (empty($_SESSION['auth']))// || $_SESSION['user']->getRoleName() == 'Продавец')
+//{
+//    header('Location: /assets/pages/signin_page.php');
+//}
 
 error_reporting(-1);
 

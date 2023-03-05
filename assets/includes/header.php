@@ -5,7 +5,7 @@
             <div class="cartAndCabinet">
                 <a href="/assets/pages/cart_page.php" class="cart_button">
                     <span>Корзина</span>
-                    <span id="cart-num">0</span>
+                    <span id="cart-num"><?=$_SESSION['cart.total_count'] ?? 0?></span>
                 </a>
                 <a href="/assets/pages/cabinet_page.php" class="cabinet_button">
                     <div class="cabinet_button_text">Личный кабинет</div>
